@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Falmata's Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 <style>
+  /* Reset & basics */
   body {
     background: #0f0f0f;
     color: #fff;
@@ -15,6 +17,7 @@
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
+  /* Sticky header */
   header {
     position: sticky;
     top: 0;
@@ -33,100 +36,275 @@
     color: #00ffe1;
   }
 
-  /* Dark mode toggle switch container */
-  .dark-toggle-switch {
-    position: relative;
-    width: 60px;
-    height: 30px;
-  }
-
-  /* Hide the checkbox */
-  .dark-toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  /* The slider background */
-  .slider {
-    position: absolute;
+  /* Dark mode button */
+  .dark-toggle {
     cursor: pointer;
-    background-color: #444;
-    border-radius: 34px;
-    top: 0; left: 0; right: 0; bottom: 0;
-    transition: background-color 0.4s ease;
+    background: none;
+    border: 2px solid #00ffe1;
+    padding: 0.3rem 0.8rem;
+    color: #00ffe1;
+    font-weight: 600;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .dark-toggle:hover {
+    background-color: #00ffe1;
+    color: #0f0f0f;
   }
 
-  /* The circle knob */
-  .slider::before {
+  /* Main content */
+  main {
+    max-width: 650px;
+    margin: 3rem 0;
+  }
+
+  p.intro {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Projects */
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .project {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+    padding: 1.8rem 2rem;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: #00ffe1;
+    cursor: pointer;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .project:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 35px #00fff0;
+    border-color: #00ffe1;
+  }
+
+  /* Underline animation */
+  .project::after {
+    content: "";
     position: absolute;
-    content: "☀️";
-    height: 26px;
-    width: 26px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #00ffe1;
-    border-radius: 50%;
-    transition: 0.4s;
+    bottom: 15px;
+    left: 20px;
+    height: 3px;
+    width: 0;
+    background: #00ffe1;
+    transition: width 0.4s ease;
+    border-radius: 2px;
+  }
+
+  .project:hover::after {
+    width: calc(100% - 40px);
+  }
+
+  /* Fade animation on project text */
+  .project span {
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+    animation-name: fadeInUp;
+    animation-duration: 0.6s;
+  }
+
+  /* Stagger animation delays */
+  .project:nth-child(1) span {
+    animation-delay: 0.2s;
+  }
+  .project:nth-child(2) span {
+    animation-delay: 0.4s;
+  }
+  .project:nth-child(3) span {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Contact line + icons inline */
+  .contact {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    gap: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #00ffe1;
+    margin-top: 4rem;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-icons a {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-icons img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 2px #00ffe1);
+    transition: filter 0.3s ease;
+  }
+
+  .social-icons a:hover img {
+    filter: drop-shadow(0 0 7px #00fff0);
+  }
+
+  /* Back to top button */
+  #backToTop {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    background: #00ffe1;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
     color: #0f0f0f;
+    font-size: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 99;
   }
 
-  /* When checked */
-  input:checked + .slider {
-    background-color: #222;
+  #backToTop.show {
+    opacity: 1;
+    pointer-events: auto;
   }
 
-  input:checked + .slider::before {
-    transform: translateX(30px);
-    content: "🌙";
-    background-color: #00ffe1;
-    color: #0f0f0f;
+  /* Dark mode styles */
+  body.dark {
+    background: #121212;
+    color: #a0fefe;
+  }
+  body.dark header {
+    background: #121212;
+    border-color: #a0fefe;
+  }
+  body.dark .project {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px #a0fefe55;
+    border-color: transparent;
+  }
+  body.dark .project:hover {
+    box-shadow: 0 0 35px #a0fefe;
+    border-color: #a0fefe;
+  }
+  body.dark .contact {
+    color: #a0fefe;
+  }
+  body.dark #backToTop {
+    background: #a0fefe;
+    color: #121212;
   }
 
-  /* Projects & other styling stays same as before */
-  /* ... (rest of your styles here, unchanged) ... */
+  /* Responsive */
+  @media (max-width: 650px) {
+    body {
+      padding: 1.5rem 1.5rem 2rem 1.5rem;
+    }
+    main {
+      margin: 2rem 0;
+    }
+    .project {
+      font-size: 1.3rem;
+      padding: 1.4rem 1.6rem;
+    }
+    .social-icons a {
+      width: 35px;
+      height: 35px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Falmata</h1>
-  <label class="dark-toggle-switch" aria-label="Toggle Dark Mode">
-    <input type="checkbox" id="darkModeToggle" />
-    <span class="slider"></span>
-  </label>
-</header>
+  <header>
+    <h1>Falmata</h1>
+    <button class="dark-toggle" aria-label="Toggle Dark Mode">Toggle Dark Mode</button>
+  </header>
 
-<main>
-  <!-- Your main content here (projects, contact, etc.) -->
-</main>
+  <main>
+    <p class="intro">Hey! I'm Falmata. Welcome to my personal space online.</p>
 
-<script>
-  const toggle = document.getElementById('darkModeToggle');
+    <div class="projects">
+      <div class="project" onclick="openLink('https://example.com')"><span>Portfolio Website</span></div>
+      <div class="project" onclick="openLink('https://youtube.com')"><span>Vlog Channel</span></div>
+      <div class="project" onclick="openLink('https://coolmathgames.com')"><span>Mini Games and Fun Tools</span></div>
+    </div>
 
-  // Load saved preference or default (dark mode on)
-  if(localStorage.getItem('darkMode') === 'off') {
-    toggle.checked = false;
-    document.body.classList.remove('dark');
-  } else {
-    toggle.checked = true;
-    document.body.classList.add('dark');
-  }
+    <div class="contact" aria-label="Contact Me">
+      <span>DM me on</span>
+      <div class="social-icons">
+        <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <img src="https://i.imgur.com/916uLLx.png" alt="Instagram Icon" />
+        </a>
+        <a href="https://tiktok.com/@yourprofile" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+          <img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok Icon" />
+        </a>
+      </div>
+    </div>
+  </main>
 
-  toggle.addEventListener('change', () => {
-    if(toggle.checked) {
-      document.body.classList.add('dark');
-      localStorage.setItem('darkMode', 'on');
-    } else {
-      document.body.classList.remove('dark');
-      localStorage.setItem('darkMode', 'off');
+  <button id="backToTop" aria-label="Back to top">↑ Top</button>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // AOS init for scroll animations if you want them elsewhere
+    AOS.init({
+      duration: 1200,
+      easing: 'ease-in-out',
+      once: true,
+    });
+
+    // Open link in new tab on project click
+    function openLink(url) {
+      window.open(url, '_blank');
     }
-  });
-</script>
+
+    // Back to top button show/hide
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Dark mode toggle
+    const darkToggle = document.querySelector('.dark-toggle');
+    darkToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
 
 </body>
 </html>
