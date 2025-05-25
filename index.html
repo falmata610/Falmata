@@ -33,12 +33,12 @@
     }
 
     .typing {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 600;
       border-right: 2px solid white;
       white-space: nowrap;
       overflow: hidden;
-      animation: typing 4s steps(20), blink .75s step-end infinite;
+      animation: typing 2.5s steps(30), blink .75s step-end infinite;
     }
 
     @keyframes typing {
@@ -70,25 +70,26 @@
     .projects {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
+      gap: 1.5rem;
       margin-top: 2rem;
     }
 
     .project {
       background: rgba(255, 255, 255, 0.08);
       border-radius: 16px;
-      padding: 1rem;
+      padding: 1.5rem;
       transition: 0.3s;
       cursor: pointer;
       position: relative;
+      text-align: center;
     }
 
     .project:hover {
-      transform: scale(1.05);
+      transform: translateY(-5px) scale(1.03);
       background: rgba(0, 255, 255, 0.1);
     }
 
-    .badge {
+    .project .badge {
       position: absolute;
       top: 10px;
       right: 10px;
@@ -97,6 +98,12 @@
       padding: 0.2rem 0.6rem;
       border-radius: 8px;
       font-size: 0.75rem;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
     }
 
     footer {
@@ -149,16 +156,38 @@
     <section>
       <h2>Projects & Interests</h2>
       <div class="projects">
-        <div class="project"><span class="badge">New</span><strong>Portfolio Website</strong><br><a href="#">Visit</a></div>
-        <div class="project"><span class="badge">Featured</span><strong>Photography Blog</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Music Production</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>AI Art Gallery</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Video Edits</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Motion Design</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Photo Edits</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Vlog Channel</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>Short Films</strong><br><a href="#">Visit</a></div>
-        <div class="project"><strong>UI/UX Concepts</strong><br><a href="#">Visit</a></div>
+        <a class="project" href="#" target="_blank">
+          <span class="badge">New</span>
+          <div class="project-title">Portfolio Website</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <span class="badge">Featured</span>
+          <div class="project-title">Photography Blog</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Music Production</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">AI Art Gallery</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Video Edits</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Motion Design</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Photo Edits</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Vlog Channel</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">Short Films</div>
+        </a>
+        <a class="project" href="#" target="_blank">
+          <div class="project-title">UI/UX Concepts</div>
+        </a>
       </div>
     </section>
 
@@ -166,8 +195,8 @@
       <h2>Contact</h2>
       <p>DM me on:</p>
       <div class="socials">
-        <a href="https://instagram.com/"><img src="https://i.imgur.com/916uLLx.png" alt="Instagram"></a>
-        <a href="https://tiktok.com/"><img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok"></a>
+        <a href="https://instagram.com/" target="_blank"><img src="https://i.imgur.com/916uLLx.png" alt="Instagram"></a>
+        <a href="https://tiktok.com/" target="_blank"><img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok"></a>
       </div>
     </section>
   </div>
