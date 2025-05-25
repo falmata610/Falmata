@@ -15,6 +15,7 @@
     margin: 0;
     transition: background-color 0.4s ease, color 0.4s ease;
     position: relative;
+    cursor: none; /* Hide default cursor for custom cursor */
   }
 
   header {
@@ -23,10 +24,21 @@
     background: #0f0f0f;
     padding: 1rem 2rem;
     z-index: 100;
-    border-bottom: 1px solid #00ffe1;
+    border-bottom: 1px solid transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+  /* Feature 5: subtle neon separator line under header */
+  header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00ffe1, transparent);
+    opacity: 0.25;
   }
 
   header h1 {
@@ -44,11 +56,18 @@
     font-weight: 600;
     border-radius: 8px;
     font-size: 1rem;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
+  /* Feature 3: Neon button glow on hover */
   .dark-toggle:hover {
     background-color: #00ffe1;
     color: #0f0f0f;
+    box-shadow:
+      0 0 8px #00ffe1,
+      0 0 20px #00ffe1,
+      0 0 30px #00ffe1;
   }
 
   main {
@@ -69,6 +88,7 @@
     max-width: 600px;
   }
 
+  /* Feature 1: fade-in on scroll (AOS handles this) */
   .project {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
@@ -148,10 +168,32 @@
     gap: 1rem;
   }
 
+  /* Feature 4: Tooltip on social icons */
   .social-icons a {
     display: block;
     width: 40px;
     height: 40px;
+    position: relative;
+  }
+  .social-icons a:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00ffe1;
+    color: #0f0f0f;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 0 10px #00ffe1;
+  }
+  .social-icons a::after {
+    opacity: 0;
   }
 
   .social-icons img {
@@ -248,6 +290,31 @@
     }
   }
 
+  /* Feature 2: custom glowing cursor */
+  .cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: rgba(0, 255, 225, 0.4);
+    box-shadow: 0 0 15px 5px rgba(0, 255, 225, 0.6);
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, box-shadow 0.3s ease;
+    z-index: 9999;
+    mix-blend-mode: screen;
+  }
+  /* Cursor scale on hover */
+  a:hover ~ .cursor-glow,
+  button:hover ~ .cursor-glow,
+  .project:hover ~ .cursor-glow {
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 0 25px 12px rgba(0, 255, 225, 0.8);
+  }
+
   /* Responsive adjustments */
   @media (max-width: 650px) {
     body {
@@ -277,15 +344,15 @@
   </header>
 
   <main>
-    <p class="intro">Hey! I'm Falmata. Welcome to my personal space online.</p>
+    <p class="intro" data-aos="fade-up" data-aos-delay="100">Hey! I'm Falmata. Welcome to my personal space online.</p>
 
     <div class="projects">
-      <div class="project" onclick="openLink('https://example.com')"><span>Portfolio Website</span></div>
-      <div class="project" onclick="openLink('https://youtube.com')"><span>Vlog Channel</span></div>
-      <div class="project" onclick="openLink('https://coolmathgames.com')"><span>Mini Games and Fun Tools</span></div>
+      <div class="project" onclick="openLink('https://example.com')" data-aos="fade-up" data-aos-delay="200"><span>Portfolio Website</span></div>
+      <div class="project" onclick="openLink('https://youtube.com')" data-aos="fade-up" data-aos-delay="300"><span>Vlog Channel</span></div>
+      <div class="project" onclick="openLink('https://coolmathgames.com')" data-aos="fade-up" data-aos-delay="400"><span>Mini Games and Fun Tools</span></div>
     </div>
 
-    <div class="contact" aria-label="Contact Me">
+    <div class="contact" aria-label="Contact Me" data-aos="fade-up" data-aos-delay="500">
       <span>DM me on</span>
       <div class="social-icons">
         <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -304,8 +371,18 @@
 
   <button id="backToTop" aria-label="Back to top">Back to Top</button>
 
+  <!-- Feature 2: Custom cursor glow element -->
+  <div class="cursor-glow"></div>
+
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+  // Initialize AOS (Feature 1: fade-in on scroll)
+  AOS.init({
+    duration: 700,
+    once: true,
+  });
+
+  // Back to top button logic
   const backToTop = document.getElementById('backToTop');
   window.addEventListener('scroll', () => {
     if(window.scrollY > 200) {
@@ -318,13 +395,22 @@
     window.scrollTo({top: 0, behavior: 'smooth'});
   });
 
+  // Open link function
   function openLink(url) {
     window.open(url, '_blank');
   }
 
+  // Dark mode toggle
   const toggle = document.querySelector('.dark-toggle');
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('dark');
+  });
+
+  // Feature 2: custom cursor glow follows mouse
+  const cursorGlow = document.querySelector('.cursor-glow');
+  window.addEventListener('mousemove', (e) => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
   });
 </script>
 
