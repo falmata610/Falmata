@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Falmata | Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <title>Falmata's Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <style>
     * {
       margin: 0;
@@ -14,164 +14,152 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    :root {
+      --bg: #0f0f0f;
+      --text: #ffffff;
+      --accent: #00ffe1;
+    }
+
+    body.light-mode {
+      --bg: #f5f5f5;
+      --text: #0f0f0f;
+      --accent: #0077ff;
+    }
+
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #e0f7fa;
-      overflow-x: hidden;
-    }
-
-    #particles-js {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    header {
-      text-align: center;
-      padding: 4rem 1rem 3rem;
-    }
-
-    .typing {
-      font-size: 2.2rem;
-      font-weight: 600;
-      border-right: 2px solid white;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: typing 1.5s steps(30), blink .75s step-end infinite;
-      display: inline-block;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem;
+      transition: background 0.3s, color 0.3s;
     }
 
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 3rem;
-      backdrop-filter: blur(14px);
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4);
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
     }
 
-    h2 {
-      font-size: 2rem;
-      margin: 2rem 0 1rem;
-      border-bottom: 2px solid #00ffff;
-      display: inline-block;
+    h1 {
+      font-size: 3rem;
+      color: var(--accent);
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin: 1rem 0;
     }
 
     .projects {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr;
       gap: 2rem;
-      margin-top: 2rem;
+      margin-top: 3rem;
     }
 
     .project {
-      background: rgba(0, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: 0.3s;
-      cursor: pointer;
-      position: relative;
-      text-align: center;
-      font-size: 1.5rem;
-      color: #ffffff;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+      transition: transform 0.3s;
     }
 
     .project:hover {
-      transform: translateY(-5px) scale(1.02);
-      background: rgba(0, 255, 255, 0.15);
-      color: #00ffff;
+      transform: scale(1.02);
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 1rem;
-      color: #ccc;
+    .project a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    .socials {
-      margin: 2rem;
-    }
-
-    .socials img {
-      height: 36px;
-      width: 36px;
-      margin: 0 15px;
-      transition: 0.3s;
-      filter: brightness(1.8);
-    }
-
-    .socials img:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 6px cyan);
-    }
-
-    .clock {
+    .toggle-btn {
       position: fixed;
-      top: 10px;
-      left: 10px;
-      font-size: 1rem;
-      color: #00ffff;
+      top: 1rem;
+      right: 1rem;
+      background: var(--accent);
+      border: none;
+      padding: 0.5rem 1rem;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .mini-tool {
+      margin-top: 4rem;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .mini-tool input {
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .mini-tool-result {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      color: var(--accent);
     }
   </style>
 </head>
 <body>
-  <div id="particles-js"></div>
-  <div class="clock" id="clock"></div>
-
-  <header>
-    <div class="typing">Hello! I'm Falmata</div>
-  </header>
+  <button class="toggle-btn" onclick="toggleTheme()">Toggle Mode</button>
 
   <div class="container">
-    <section>
-      <h2>About Me</h2>
-      <p style="margin-top: 1rem; line-height: 1.7;">Creative mind passionate about technology, storytelling, visual design, and content creation. I enjoy building websites, crafting unique digital media, and turning ideas into impactful visuals.</p>
-    </section>
+    <h1 data-aos="fade-down">Falmata</h1>
+    <p data-aos="fade-up">Hey! I'm Falmata. Welcome to my personal space online.</p>
 
-    <section>
-      <h2>Projects & Interests</h2>
-      <div class="projects">
-        <a class="project" href="https://falmata-portfolio.example.com" target="_blank">Portfolio Website</a>
-        <a class="project" href="https://youtube.com/@falmata-vlogs" target="_blank">Vlog Channel</a>
-        <a class="project" href="https://falmata-games.example.com" target="_blank">Mini Games and Fun Tools</a>
+    <div class="projects">
+      <div class="project" data-aos="fade-up">
+        <h2>Portfolio Website</h2>
+        <a href="https://example.com" target="_blank">Visit</a>
       </div>
-    </section>
+      <div class="project" data-aos="fade-up" data-aos-delay="100">
+        <h2>Vlog Channel</h2>
+        <a href="https://youtube.com" target="_blank">Visit</a>
+      </div>
+      <div class="project" data-aos="fade-up" data-aos-delay="200">
+        <h2>Mini Games and Fun Tools</h2>
+        <a href="https://coolmathgames.com" target="_blank">Visit</a>
+      </div>
+    </div>
 
-    <section>
-      <h2>Contact</h2>
-      <p style="margin: 1rem 0;">DM me on:</p>
-      <div class="socials">
-        <a href="https://instagram.com/" target="_blank"><img src="https://i.imgur.com/916uLLx.png" alt="Instagram"></a>
-        <a href="https://tiktok.com/" target="_blank"><img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok"></a>
-      </div>
-    </section>
+    <div class="mini-tool" data-aos="fade-up" data-aos-delay="300">
+      <h3>Random Compliment Generator</h3>
+      <button onclick="showCompliment()">Get Compliment</button>
+      <div class="mini-tool-result" id="complimentBox"></div>
+    </div>
   </div>
 
-  <footer>
-    &copy; 2025 Falmata. All rights reserved.
-  </footer>
-
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    function updateClock() {
-      const now = new Date();
-      document.getElementById("clock").innerText = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+    AOS.init();
 
-    particlesJS.load('particles-js', 'https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.json');
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+    }
+
+    const compliments = [
+      "You're doing amazing!",
+      "This site is looking fire 🔥",
+      "Keep pushing, you're on the right path!",
+      "You have great taste!",
+      "You're building something special!"
+    ];
+
+    function showCompliment() {
+      const box = document.getElementById("complimentBox");
+      const pick = compliments[Math.floor(Math.random() * compliments.length)];
+      box.innerText = pick;
+    }
   </script>
 </body>
 </html>
