@@ -56,7 +56,7 @@
   /* Main content with flex for image on right */
   main {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch; /* stretch vertical */
     gap: 2rem;
     max-width: 900px;
     margin: 3rem 0;
@@ -66,6 +66,9 @@
   }
   main > div:last-child {
     flex-shrink: 0;
+    width: 350px; /* bigger width */
+    display: flex;
+    align-items: center;
   }
 
   p.intro {
@@ -181,12 +184,13 @@
     filter: drop-shadow(0 0 7px #00fff0);
   }
 
-  /* Profile image on right */
+  /* Profile image on right - bigger, fill vertical */
   main img {
-    width: 220px;
-    height: auto;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 12px;
-    box-shadow: 0 0 15px #00ffe1;
+    box-shadow: 0 0 20px #00ffe1;
   }
 
   /* Back to top button */
@@ -251,6 +255,8 @@
     }
     main > div:last-child {
       margin-top: 2rem;
+      width: 100%;
+      height: 280px; /* smaller on mobile */
     }
     .project {
       font-size: 1.3rem;
@@ -261,7 +267,11 @@
       height: 35px;
     }
     main img {
-      width: 160px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffe1;
     }
   }
 </style>
