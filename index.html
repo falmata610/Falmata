@@ -1,482 +1,190 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Falmata | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
   <style>
-    /* Animated gradient background */
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c3c57);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: #e0e6f0;
-      scroll-behavior: smooth;
+      background: #0f0f0f;
+      color: white;
       overflow-x: hidden;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
       text-align: center;
-      opacity: 0;
-      animation: fadeInContent 1.3s ease forwards;
-      animation-delay: 0.4s;
+      padding: 4rem 1rem 2rem;
     }
 
-    @keyframes fadeInContent {
-      to { opacity: 1; }
+    .typing {
+      font-size: 2.5rem;
+      font-weight: 600;
+      border-right: 2px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 4s steps(20), blink .75s step-end infinite;
     }
 
-    /* Profile pic glow & hover */
-    .profile-pic {
-      width: 160px;
-      border-radius: 50%;
-      border: 5px solid rgba(255, 255, 255, 0.25);
-      box-shadow:
-        0 0 12px rgba(0, 217, 255, 0.7),
-        0 0 20px rgba(0, 217, 255, 0.5),
-        0 0 40px rgba(0, 217, 255, 0.4);
-      margin-bottom: 20px;
-      transition: transform 0.3s ease, box-shadow 0.4s ease;
-      cursor: default;
-    }
-    .profile-pic:hover {
-      transform: scale(1.12) rotate(5deg);
-      box-shadow:
-        0 0 20px #00d9ff,
-        0 0 40px #00d9ff,
-        0 0 60px #00d9ff,
-        0 0 80px #00d9ff;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
     }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 12px rgba(0, 217, 255, 0.8);
-      letter-spacing: 2px;
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
 
-    p.tagline {
-      font-size: 1.3rem;
-      color: #a0b9d3;
-      margin-bottom: 40px;
-      font-style: italic;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
     }
 
     h2 {
-      margin-top: 50px;
       font-size: 2rem;
-      border-bottom: 2px solid #00d9ff;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #00ffff;
       display: inline-block;
-      padding-bottom: 5px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-    }
-
-    .about, .contact {
-      margin-top: 30px;
-      font-size: 1.15rem;
-      line-height: 1.8;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      color: #cbd6e8;
-      text-shadow: 0 0 6px rgba(0,0,0,0.4);
     }
 
     .projects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 22px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
-    .project-card {
-      background-color: rgba(255, 255, 255, 0.07);
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-      transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    .project {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1rem;
+      transition: 0.3s;
       cursor: pointer;
-      text-align: left;
-      color: #b6d4ff;
-      user-select: none;
       position: relative;
-      overflow: hidden;
     }
-    .project-card::before {
-      content: "";
+
+    .project:hover {
+      transform: scale(1.05);
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .badge {
       position: absolute;
-      top: -100%;
-      left: -100%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0,217,255,0.3) 10%, transparent 40%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .project-card:hover::before {
-      opacity: 1;
-    }
-    .project-card:hover {
-      background-color: rgba(0, 217, 255, 0.2);
-      transform: translateY(-10px) scale(1.05);
-      box-shadow: 0 15px 30px rgba(0, 217, 255, 0.5);
-      color: #fff;
-      z-index: 1;
-    }
-
-    .project-card a {
-      color: #00d9ff;
-      text-decoration: none;
-      font-size: 1.25rem;
-      font-weight: 700;
-      position: relative;
-      z-index: 2;
-    }
-    .project-card a:hover {
-      text-decoration: underline;
-      color: #6ffcff;
-    }
-
-    .project-card p {
-      margin-top: 8px;
-      color: #a0c8ff;
-      position: relative;
-      z-index: 2;
-    }
-
-    .socials {
-      margin-top: 25px;
-    }
-
-    .socials a {
-      color: #cce4ff;
-      text-decoration: none;
-      margin: 0 16px;
-      font-size: 1.9rem;
-      transition: color 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .socials a img {
-      border-radius: 6px;
-      filter: drop-shadow(0 0 4px rgba(0, 217, 255, 0.5));
-      transition: filter 0.3s ease, transform 0.3s ease;
-    }
-
-    .socials a:hover {
-      color: #00d9ff;
-    }
-
-    .socials a:hover img {
-      filter: drop-shadow(0 0 12px #00d9ff);
-      transform: scale(1.15);
-    }
-
-    /* Tooltip */
-    .socials a[data-tooltip] {
-      position: relative;
-      cursor: pointer;
-    }
-    .socials a[data-tooltip]:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 130%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #00d9ff;
-      color: #000;
-      padding: 5px 9px;
-      border-radius: 5px;
-      white-space: nowrap;
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 0 6px #00d9ffaa;
-      pointer-events: none;
-      opacity: 1;
-      transition: opacity 0.3s ease;
-      z-index: 10;
+      top: 10px;
+      right: 10px;
+      background: #00ffff;
+      color: black;
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
     }
 
     footer {
-      margin-top: 70px;
-      font-size: 0.9rem;
-      color: #6d8bbf;
-      text-shadow: 0 0 3px rgba(0,0,0,0.2);
-      user-select: none;
-    }
-
-    /* Back to top button - upgraded */
-    #backToTop {
-      position: fixed;
-      bottom: 40px;
-      right: 40px;
-      background: #00d9ff;
-      color: #000;
-      border: none;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-weight: 700;
-      box-shadow:
-        0 0 8px #00d9ff,
-        0 0 15px #00d9ff,
-        0 0 20px #00d9ff;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      user-select: none;
-      filter: drop-shadow(0 0 4px #00d9ff);
-    }
-    #backToTop.visible {
-      opacity: 1;
-      visibility: visible;
-      animation: pulseGlow 2.5s infinite alternate;
-    }
-    @keyframes pulseGlow {
-      0% {
-        box-shadow:
-          0 0 8px #00d9ff,
-          0 0 15px #00d9ff,
-          0 0 20px #00d9ff;
-      }
-      100% {
-        box-shadow:
-          0 0 15px #00d9ff,
-          0 0 25px #00d9ff,
-          0 0 35px #00d9ff;
-      }
-    }
-
-    /* Icon arrow up inside the button */
-    #backToTop svg {
-      width: 22px;
-      height: 22px;
-      fill: #000;
-      filter: drop-shadow(0 0 2px #000);
-    }
-
-    /* Responsive Hamburger Menu */
-    .hamburger {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 36px;
-      height: 30px;
-      cursor: pointer;
-      z-index: 1000;
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .hamburger span {
-      display: block;
-      height: 4px;
-      background: #00d9ff;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-    .hamburger.open span:nth-child(1) {
-      transform: rotate(45deg) translate(7px, 7px);
-    }
-    .hamburger.open span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.open span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: -260px;
-      height: 100vh;
-      width: 220px;
-      background: rgba(0, 217, 255, 0.15);
-      backdrop-filter: blur(8px);
-      box-shadow: 2px 0 12px rgba(0, 217, 255, 0.3);
-      padding-top: 60px;
-      transition: left 0.35s ease;
-      z-index: 999;
-      user-select: none;
-    }
-    nav.open {
-      left: 0;
-    }
-    nav ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0;
-    }
-    nav ul li {
-      margin: 20px 0;
       text-align: center;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #e0e6f0;
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: 0.6px;
-      transition: color 0.3s ease;
-    }
-    nav ul li a:hover {
-      color: #00d9ff;
-      text-decoration: underline;
+      padding: 2rem;
+      font-size: 1rem;
+      color: #ccc;
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 700px) {
-      .projects {
-        grid-template-columns: 1fr;
-      }
-      .hamburger {
-        display: flex;
-      }
-      .container {
-        padding: 60px 15px 40px;
-      }
+    .socials {
+      margin: 1rem;
+    }
+
+    .socials img {
+      height: 30px;
+      width: 30px;
+      margin: 0 10px;
+      transition: 0.3s;
+      filter: brightness(1.5);
+    }
+
+    .socials img:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 5px cyan);
+    }
+
+    .clock {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      font-size: 1rem;
+      color: #00ffff;
     }
   </style>
 </head>
 <body>
-  <!-- Hamburger menu for mobile -->
-  <div class="hamburger" id="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <div id="particles-js"></div>
+  <div class="clock" id="clock"></div>
 
-  <!-- Side navigation -->
-  <nav id="navMenu" aria-label="Primary navigation">
-    <ul>
-      <li><a href="#about" onclick="closeMenu()">About Me</a></li>
-      <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
-      <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
-    </ul>
-  </nav>
+  <header>
+    <div class="typing">Hello! I'm Falmata</div>
+  </header>
 
   <div class="container">
-    <img
-      src="https://i.imgur.com/TYwInZQ.jpeg"
-      alt="Falmata Profile Picture"
-      class="profile-pic"
-      loading="lazy"
-      width="160"
-      height="160"
-    />
-    <h1>Falmata</h1>
-    <p class="tagline">Hello! I'm Falmata, a creative soul passionate about tech and art.</p>
-
-    <section id="about" class="about">
+    <section>
       <h2>About Me</h2>
-      <p>
-        I’m into building cool projects, photography, and music production. Always learning, always creating.
-      </p>
+      <p>I’m a creative mind passionate about tech, photography, music, and digital design.</p>
     </section>
 
-    <section id="projects" class="projects">
+    <section>
       <h2>Projects & Interests</h2>
-      <div class="project-card" onclick="window.open('https://yourportfolio.com', '_blank')">
-        <a href="https://yourportfolio.com" target="_blank" rel="noopener noreferrer">Portfolio Website</a>
-        <p>My main showcase of skills and projects.</p>
-      </div>
-      <div class="project-card" onclick="window.open('https://photoblog.example.com', '_blank')">
-        <a href="https://photoblog.example.com" target="_blank" rel="noopener noreferrer">Photography Blog</a>
-        <p>Snapshots from my travels and shoots.</p>
-      </div>
-      <div class="project-card" onclick="window.open('https://musicproduction.example.com', '_blank')">
-        <a href="https://musicproduction.example.com" target="_blank" rel="noopener noreferrer">Music Production</a>
-        <p>Beats, mixes, and sound experiments.</p>
+      <div class="projects">
+        <div class="project"><span class="badge">New</span><strong>Portfolio Website</strong><br><a href="#">Visit</a></div>
+        <div class="project"><span class="badge">Featured</span><strong>Photography Blog</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Music Production</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>AI Art Gallery</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Video Edits</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Motion Design</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Photo Edits</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Vlog Channel</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>Short Films</strong><br><a href="#">Visit</a></div>
+        <div class="project"><strong>UI/UX Concepts</strong><br><a href="#">Visit</a></div>
       </div>
     </section>
 
-    <section id="contact" class="contact">
+    <section>
       <h2>Contact</h2>
-      <p>DM me on <a href="mailto:falmata@example.com">falmata@example.com</a></p>
+      <p>DM me on:</p>
       <div class="socials">
-        <a href="https://www.instagram.com/" target="_blank" data-tooltip="Instagram">
-          <img src="https://i.imgur.com/916uLLx.png" alt="Instagram" style="height:24px; width:24px;" />
-          Instagram
-        </a>
-        <a href="https://www.tiktok.com/" target="_blank" data-tooltip="TikTok">
-          <img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok" style="height:24px; width:24px;" />
-          TikTok
-        </a>
+        <a href="https://instagram.com/"><img src="https://i.imgur.com/916uLLx.png" alt="Instagram"></a>
+        <a href="https://tiktok.com/"><img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok"></a>
       </div>
     </section>
-
-    <footer>
-      &copy; 2025 Falmata. Made with ❤️ and code.
-    </footer>
   </div>
 
-  <!-- Back to Top button -->
-  <button id="backToTop" aria-label="Back to top">
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M12 4l-8 8h6v8h4v-8h6z"/>
-    </svg>
-  </button>
+  <footer>
+    &copy; 2025 Falmata. All rights reserved.
+  </footer>
 
   <script>
-    // Back to top button logic
-    const backToTopButton = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopButton.classList.add('visible');
-      } else {
-        backToTopButton.classList.remove('visible');
-      }
-    });
-    backToTopButton.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Hamburger menu toggle
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('navMenu');
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navMenu.classList.toggle('open');
-    });
-    // Close menu on nav link click
-    function closeMenu() {
-      hamburger.classList.remove('open');
-      navMenu.classList.remove('open');
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").innerText = now.toLocaleTimeString();
     }
-    // Accessibility: toggle menu with keyboard (Enter key)
-    hamburger.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        hamburger.click();
-      }
-    });
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    particlesJS.load('particles-js', 'https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js/particles.json');
   </script>
 </body>
 </html>
