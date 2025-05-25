@@ -53,10 +53,19 @@
     color: #0f0f0f;
   }
 
-  /* Main content */
+  /* Main content with flex for image on right */
   main {
-    max-width: 650px;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    max-width: 900px;
     margin: 3rem 0;
+  }
+  main > div:first-child {
+    flex: 1;
+  }
+  main > div:last-child {
+    flex-shrink: 0;
   }
 
   p.intro {
@@ -172,6 +181,14 @@
     filter: drop-shadow(0 0 7px #00fff0);
   }
 
+  /* Profile image on right */
+  main img {
+    width: 220px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #00ffe1;
+  }
+
   /* Back to top button */
   #backToTop {
     position: fixed;
@@ -229,6 +246,11 @@
     }
     main {
       margin: 2rem 0;
+      flex-direction: column;
+      align-items: center;
+    }
+    main > div:last-child {
+      margin-top: 2rem;
     }
     .project {
       font-size: 1.3rem;
@@ -237,6 +259,9 @@
     .social-icons a {
       width: 35px;
       height: 35px;
+    }
+    main img {
+      width: 160px;
     }
   }
 </style>
@@ -249,62 +274,61 @@
   </header>
 
   <main>
-    <p class="intro">Hey! I'm Falmata. Welcome to my personal space online.</p>
+    <div>
+      <p class="intro">Hey! I'm Falmata. Welcome to my personal space online.</p>
 
-    <div class="projects">
-      <div class="project" onclick="openLink('https://example.com')"><span>Portfolio Website</span></div>
-      <div class="project" onclick="openLink('https://youtube.com')"><span>Vlog Channel</span></div>
-      <div class="project" onclick="openLink('https://coolmathgames.com')"><span>Mini Games and Fun Tools</span></div>
+      <div class="projects">
+        <div class="project" onclick="openLink('https://example.com')"><span>Portfolio Website</span></div>
+        <div class="project" onclick="openLink('https://youtube.com')"><span>Vlog Channel</span></div>
+        <div class="project" onclick="openLink('https://coolmathgames.com')"><span>Mini Games and Fun Tools</span></div>
+      </div>
+
+      <div class="contact" aria-label="Contact Me">
+        <span>DM me on</span>
+        <div class="social-icons">
+          <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="https://i.imgur.com/916uLLx.png" alt="Instagram Icon" />
+          </a>
+          <a href="https://tiktok.com/@yourprofile" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok Icon" />
+          </a>
+        </div>
+      </div>
     </div>
 
-    <div class="contact" aria-label="Contact Me">
-      <span>DM me on</span>
-      <div class="social-icons">
-        <a href="https://instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <img src="https://i.imgur.com/916uLLx.png" alt="Instagram Icon" />
-        </a>
-        <a href="https://tiktok.com/@yourprofile" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok Icon" />
-        </a>
-      </div>
+    <div>
+      <img src="https://i.imgur.com/FtKGiTo.jpeg" alt="Falmata Profile" />
     </div>
   </main>
 
-  <button id="backToTop" aria-label="Back to top">↑ Top</button>
+  <button id="backToTop" aria-label="Back to top">Back to Top</button>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    // AOS init for scroll animations if you want them elsewhere
-    AOS.init({
-      duration: 1200,
-      easing: 'ease-in-out',
-      once: true,
-    });
-
-    // Open link in new tab on project click
-    function openLink(url) {
-      window.open(url, '_blank');
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Back to top button
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 200) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
     }
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
 
-    // Back to top button show/hide
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if(window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
-      } else {
-        backToTopBtn.classList.remove('show');
-      }
-    });
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    });
+  // Open links on project click
+  function openLink(url) {
+    window.open(url, '_blank');
+  }
 
-    // Dark mode toggle
-    const darkToggle = document.querySelector('.dark-toggle');
-    darkToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
-  </script>
+  // Dark mode toggle
+  const toggle = document.querySelector('.dark-toggle');
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+  });
+</script>
 
 </body>
 </html>
