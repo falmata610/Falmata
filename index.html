@@ -63,7 +63,15 @@
 </head>
 <body>
   <div class="container">
-    <img src="https://i.pravatar.cc/150" alt="Profile Picture" class="profile-pic" />
+    <img id="profile-pic" src="" alt="Profile Picture" class="profile-pic" <script>
+  const img = document.getElementById('profile-pic');
+
+  // Pick a random number between 1 and 70 (pravatar has avatars 1-70)
+  const randomId = Math.floor(Math.random() * 70) + 1;
+
+  // Set the image src once on page load
+  img.src = `https://i.pravatar.cc/150?img=${randomId}`;
+</script> />
     <h1>Falmata</h1>
     <p>Hello! I'm Falmata, a passionate coder and music lover.</p>
 
@@ -78,7 +86,7 @@
     </ul>
 
     <h2>Contact</h2>
-    <p>Email: <a href="mailto:falmata@example.com">falmata@example.com</a></p>
+    <p>Email: <a href="mailto:falmataalibot@gmail.com">falmata@example.com</a></p>
   </div>
 </body>
 </html>
