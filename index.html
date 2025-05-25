@@ -1,166 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Falmata's Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Falmata's Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+<style>
+  /* Keep your existing colors and styles */
+  body {
+    background: #0f0f0f;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    padding: 2rem;
+  }
 
-    :root {
-      --bg: #0f0f0f;
-      --text: #ffffff;
-      --accent: #00ffe1;
-    }
+  h1 {
+    color: #00ffe1;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
 
-    body.light-mode {
-      --bg: #f5f5f5;
-      --text: #0f0f0f;
-      --accent: #0077ff;
-    }
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      padding: 2rem;
-      transition: background 0.3s, color 0.3s;
-      min-height: 100vh;
-    }
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-    }
+  .project {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+    padding: 1.8rem 2rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #00ffe1;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    text-align: left;
+    user-select: none;
+    border: 2px solid transparent;
+  }
 
-    h1 {
-      font-size: 3rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
+  .project:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    border-color: #00ffe1;
+  }
 
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      line-height: 1.4;
-    }
+  /* Animation for project text */
+  .project .text {
+    display: inline-block;
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
 
-    .projects {
-      display: flex;
-      flex-direction: column;
-      gap: 2.5rem;
-      margin-top: 2rem;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-    .project {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
-      padding: 1.8rem 2rem;
-      font-weight: 600;
-      font-size: 1.5rem;
-      color: var(--accent);
-      cursor: pointer;
-      transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
-      text-align: left;
-      user-select: none;
-      border: 2px solid transparent;
-    }
-
-    .project:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
-      border-color: var(--accent);
-    }
-
-    .toggle-btn {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--accent);
-      border: none;
-      padding: 0.5rem 1rem;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background-color 0.4s ease, color 0.4s ease;
-      z-index: 9999;
-      user-select: none;
-    }
-
-    .toggle-btn:hover {
-      background-color: #00fff0;
-      color: #000;
-    }
-
-    .mini-tool {
-      margin-top: 4rem;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 1.5rem;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-
-    .mini-tool button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: var(--accent);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #000;
-      transition: background-color 0.4s ease;
-    }
-
-    .mini-tool button:hover {
-      background-color: #00fff0;
-    }
-
-    .mini-tool-result {
-      margin-top: 1rem;
-      font-size: 1.3rem;
-      color: var(--accent);
-      min-height: 2rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .project {
-        font-size: 1.3rem;
-        padding: 1.4rem 1.6rem;
-      }
-    }
-  </style>
+  /* DM me line */
+  .contact-line {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #00ffe1;
+  }
+</style>
 </head>
 <body>
-  <button class="toggle-btn" onclick="toggleTheme()">Toggle Mode</button>
 
-  <div class="container">
-    <h1 data-aos="fade-down">Falmata</h1>
-    <p data-aos="fade-up">Hey! I'm Falmata. Welcome to my personal space online.</p>
+  <h1 data-aos="fade-down">Falmata</h1>
+  <p data-aos="fade-up">Hey! I'm Falmata. Welcome to my personal space online.</p>
 
-    <div class="projects">
-      <div class="project" data-aos="fade-up" data-aos-delay="0" onclick="openLink('https://example.com')">Portfolio Website</div>
-      <div class="project" data-aos="fade-up" data-aos-delay="100" onclick="openLink('https://youtube.com')">Vlog Channel</div>
-      <div class="project" data-aos="fade-up" data-aos-delay="200" onclick="openLink('https://coolmathgames.com')">Mini Games and Fun Tools</div>
+  <div class="projects">
+    <div class="project" data-aos="fade-up" data-aos-delay="0" onclick="openLink('https://example.com')">
+      <span class="text">Portfolio Website</span>
     </div>
-
-    <div class="mini-tool" data-aos="fade-up" data-aos-delay="300">
-      <h3>Random Compliment Generator</h3>
-      <button onclick="showCompliment()">Get Compliment</button>
-      <div class="mini-tool-result" id="complimentBox"></div>
+    <div class="project" data-aos="fade-up" data-aos-delay="100" onclick="openLink('https://youtube.com')">
+      <span class="text">Vlog Channel</span>
+    </div>
+    <div class="project" data-aos="fade-up" data-aos-delay="200" onclick="openLink('https://coolmathgames.com')">
+      <span class="text">Mini Games and Fun Tools</span>
     </div>
   </div>
+
+  <p class="contact-line" data-aos="fade-up" data-aos-delay="300">DM me on</p>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -170,27 +110,10 @@
       once: true,
     });
 
-    function toggleTheme() {
-      document.body.classList.toggle('light-mode');
-    }
-
-    const compliments = [
-      "You're doing amazing!",
-      "This site is looking fire 🔥",
-      "Keep pushing, you're on the right path!",
-      "You have great taste!",
-      "You're building something special!"
-    ];
-
-    function showCompliment() {
-      const box = document.getElementById("complimentBox");
-      const pick = compliments[Math.floor(Math.random() * compliments.length)];
-      box.innerText = pick;
-    }
-
     function openLink(url) {
       window.open(url, '_blank');
     }
   </script>
+
 </body>
 </html>
