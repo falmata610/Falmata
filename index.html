@@ -15,8 +15,8 @@
     }
 
     body {
-      background: #0f0f0f;
-      color: white;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
       overflow-x: hidden;
     }
 
@@ -29,7 +29,7 @@
 
     header {
       text-align: center;
-      padding: 4rem 1rem 2rem;
+      padding: 4rem 1rem 3rem;
     }
 
     .typing {
@@ -38,7 +38,8 @@
       border-right: 2px solid white;
       white-space: nowrap;
       overflow: hidden;
-      animation: typing 2.5s steps(30), blink .75s step-end infinite;
+      animation: typing 1.5s steps(30), blink .75s step-end infinite;
+      display: inline-block;
     }
 
     @keyframes typing {
@@ -53,57 +54,41 @@
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      padding: 2rem;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.05);
+      padding: 3rem;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 255, 255, 0.04);
       border-radius: 20px;
-      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4);
     }
 
     h2 {
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin: 2rem 0 1rem;
       border-bottom: 2px solid #00ffff;
       display: inline-block;
     }
 
     .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
       margin-top: 2rem;
     }
 
     .project {
       background: rgba(255, 255, 255, 0.08);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 2rem;
       transition: 0.3s;
       cursor: pointer;
       position: relative;
       text-align: center;
+      font-size: 1.4rem;
     }
 
     .project:hover {
-      transform: translateY(-5px) scale(1.03);
+      transform: translateY(-5px) scale(1.02);
       background: rgba(0, 255, 255, 0.1);
-    }
-
-    .project .badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #00ffff;
-      color: black;
-      padding: 0.2rem 0.6rem;
-      border-radius: 8px;
-      font-size: 0.75rem;
-    }
-
-    .project-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
     }
 
     footer {
@@ -114,20 +99,20 @@
     }
 
     .socials {
-      margin: 1rem;
+      margin: 2rem;
     }
 
     .socials img {
-      height: 30px;
-      width: 30px;
-      margin: 0 10px;
+      height: 36px;
+      width: 36px;
+      margin: 0 15px;
       transition: 0.3s;
-      filter: brightness(1.5);
+      filter: brightness(1.8);
     }
 
     .socials img:hover {
       transform: scale(1.2);
-      filter: drop-shadow(0 0 5px cyan);
+      filter: drop-shadow(0 0 6px cyan);
     }
 
     .clock {
@@ -150,50 +135,28 @@
   <div class="container">
     <section>
       <h2>About Me</h2>
-      <p>I’m a creative mind passionate about tech, photography, music, and digital design.</p>
+      <p style="margin-top: 1rem; line-height: 1.7;">Creative mind passionate about technology, storytelling, visual design, and content creation. I enjoy building websites, crafting unique digital media, and turning ideas into impactful visuals.</p>
     </section>
 
     <section>
       <h2>Projects & Interests</h2>
       <div class="projects">
-        <a class="project" href="#" target="_blank">
-          <span class="badge">New</span>
-          <div class="project-title">Portfolio Website</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <span class="badge">Featured</span>
-          <div class="project-title">Photography Blog</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Music Production</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">AI Art Gallery</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Video Edits</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Motion Design</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Photo Edits</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Vlog Channel</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">Short Films</div>
-        </a>
-        <a class="project" href="#" target="_blank">
-          <div class="project-title">UI/UX Concepts</div>
-        </a>
+        <a class="project" href="#" target="_blank">Portfolio Website</a>
+        <a class="project" href="#" target="_blank">Vlog Channel</a>
+        <a class="project" href="#" target="_blank">Creative Writing & Blogging</a>
+        <a class="project" href="#" target="_blank">Mini Games & Fun Tools</a>
+        <a class="project" href="#" target="_blank">Music & Beats Library</a>
+        <a class="project" href="#" target="_blank">Visual Effects Showcases</a>
+        <a class="project" href="#" target="_blank">Digital Poster Gallery</a>
+        <a class="project" href="#" target="_blank">CSS Art & Code Experiments</a>
+        <a class="project" href="#" target="_blank">Mobile App Concepts</a>
+        <a class="project" href="#" target="_blank">Dark Mode UI Explorations</a>
       </div>
     </section>
 
     <section>
       <h2>Contact</h2>
-      <p>DM me on:</p>
+      <p style="margin: 1rem 0;">DM me on:</p>
       <div class="socials">
         <a href="https://instagram.com/" target="_blank"><img src="https://i.imgur.com/916uLLx.png" alt="Instagram"></a>
         <a href="https://tiktok.com/" target="_blank"><img src="https://i.imgur.com/Dvcffgi.png" alt="TikTok"></a>
