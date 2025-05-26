@@ -3,34 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyAmazon - Online Shopping</title>
+    <title>ZonMy - Online Shopping</title>
     <style>
-        /* Basic CSS styling */
+        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Amazon Ember', Arial, sans-serif;
         }
         
         body {
-            background-color: #f3f3f3;
+            background-color: #EAEDED;
+            color: #0F1111;
         }
         
-        /* Header styles */
-        header {
+        /* Header Styles */
+        .navbar {
             background-color: #131921;
-            color: white;
-            padding: 15px 20px;
+            height: 60px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .logo {
+            color: #FF9900;
             font-size: 24px;
             font-weight: bold;
-            color: #ff9900;
+            margin-right: 20px;
+        }
+        
+        .delivery-info {
+            color: white;
+            font-size: 12px;
+            margin-right: 20px;
         }
         
         .search-bar {
@@ -39,160 +49,346 @@
             margin: 0 20px;
         }
         
-        .search-bar input {
+        .search-select {
+            background-color: #F3F3F3;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            padding: 10px;
+            width: 50px;
+        }
+        
+        .search-input {
             width: 100%;
             padding: 10px;
             border: none;
         }
         
-        .search-bar button {
-            background-color: #febd69;
+        .search-button {
+            background-color: #FEBD69;
             border: none;
+            border-radius: 0 4px 4px 0;
             padding: 10px 15px;
             cursor: pointer;
         }
         
-        .nav-links {
+        .nav-options {
             display: flex;
-            gap: 20px;
-        }
-        
-        .nav-links a {
             color: white;
-            text-decoration: none;
+            margin-left: 20px;
         }
         
-        /* Main content */
-        .hero {
-            height: 300px;
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://via.placeholder.com/1500x300');
-            background-size: cover;
+        .nav-option {
+            margin: 0 10px;
+            font-size: 12px;
+        }
+        
+        .nav-option span:first-child {
+            font-size: 10px;
+        }
+        
+        .nav-option span:last-child {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        
+        .cart {
             display: flex;
             align-items: center;
-            justify-content: center;
             color: white;
+            margin-left: 20px;
+        }
+        
+        /* Secondary Navbar */
+        .secondary-nav {
+            background-color: #232F3E;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-right: 15px;
+            font-size: 14px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 300px;
+            background-image: url('https://via.placeholder.com/1500x300');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
             margin-bottom: 20px;
         }
         
+        /* Product Grid */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
             padding: 20px;
+            margin-top: -150px;
+            z-index: 1;
+            position: relative;
         }
         
         .product-card {
             background-color: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .product-card img {
             width: 100%;
             height: 200px;
             object-fit: contain;
+            margin-bottom: 15px;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            flex-grow: 1;
+        }
+        
+        .product-rating {
+            color: #FFA41C;
             margin-bottom: 10px;
         }
         
-        .product-card h3 {
-            margin-bottom: 10px;
-        }
-        
-        .product-card .price {
-            color: #B12704;
-            font-weight: bold;
+        .product-price {
             font-size: 18px;
+            font-weight: bold;
+            color: #B12704;
             margin-bottom: 10px;
         }
         
-        .product-card button {
-            background-color: #f0c14b;
-            border: 1px solid #a88734;
+        .product-prime {
+            color: #007185;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart {
+            background-color: #FFD814;
+            border: none;
+            border-radius: 20px;
             padding: 8px 15px;
-            width: 100%;
             cursor: pointer;
+            width: 100%;
+            font-size: 14px;
         }
         
         /* Footer */
-        footer {
+        .footer {
             background-color: #131921;
             color: white;
-            padding: 30px 20px;
-            text-align: center;
-            margin-top: 30px;
+            padding: 40px 20px;
+        }
+        
+        .footer-back {
+            background-color: #131921;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 13px;
+        }
+        
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #DDD;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">MyAmazon</div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for products...">
-            <button>Search</button>
+    <!-- Header/Navbar -->
+    <div class="navbar">
+        <div class="logo">ZonMy</div>
+        <div class="delivery-info">
+            <span>Deliver to</span><br>
+            <span>United States</span>
         </div>
-        <nav class="nav-links">
-            <a href="#">Account</a>
-            <a href="#">Orders</a>
-            <a href="#">Cart (0)</a>
-        </nav>
-    </header>
-    
-    <div class="hero">
-        <h1>Welcome to MyAmazon</h1>
+        <div class="search-bar">
+            <select class="search-select">
+                <option>All</option>
+                <option>Electronics</option>
+                <option>Home</option>
+                <option>Books</option>
+            </select>
+            <input type="text" class="search-input" placeholder="Search ZonMy">
+            <button class="search-button">Search</button>
+        </div>
+        <div class="nav-options">
+            <div class="nav-option">
+                <span>Hello, Sign in</span><br>
+                <span>Account & Lists</span>
+            </div>
+            <div class="nav-option">
+                <span>Returns</span><br>
+                <span>& Orders</span>
+            </div>
+            <div class="cart">
+                <span>Cart</span>
+            </div>
+        </div>
     </div>
     
+    <!-- Secondary Navbar -->
+    <div class="secondary-nav">
+        <ul class="nav-menu">
+            <li>Today's Deals</li>
+            <li>Customer Service</li>
+            <li>Registry</li>
+            <li>Gift Cards</li>
+            <li>Sell</li>
+        </ul>
+    </div>
+    
+    <!-- Hero Section -->
+    <div class="hero"></div>
+    
+    <!-- Product Grid -->
     <div class="product-grid">
         <div class="product-card">
-            <img src="https://via.placeholder.com/200" alt="Product 1">
-            <h3>Wireless Headphones</h3>
-            <div class="price">$59.99</div>
-            <p>High-quality wireless headphones with noise cancellation</p>
-            <button>Add to Cart</button>
+            <img src="https://via.placeholder.com/300" alt="Wireless Earbuds">
+            <h3 class="product-title">Premium Wireless Earbuds with Noise Cancellation</h3>
+            <div class="product-rating">★★★★☆ (1,234)</div>
+            <div class="product-price">$89.99</div>
+            <div class="product-prime">FREE delivery for Prime members</div>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
         
         <div class="product-card">
-            <img src="https://via.placeholder.com/200" alt="Product 2">
-            <h3>Smart Watch</h3>
-            <div class="price">$129.99</div>
-            <p>Track your fitness and stay connected</p>
-            <button>Add to Cart</button>
+            <img src="https://via.placeholder.com/300" alt="Smart Watch">
+            <h3 class="product-title">Fitness Smart Watch with Heart Rate Monitor</h3>
+            <div class="product-rating">★★★★★ (2,567)</div>
+            <div class="product-price">$129.99</div>
+            <div class="product-prime">FREE delivery for Prime members</div>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
         
         <div class="product-card">
-            <img src="https://via.placeholder.com/200" alt="Product 3">
-            <h3>Bluetooth Speaker</h3>
-            <div class="price">$39.99</div>
-            <p>Portable speaker with great sound quality</p>
-            <button>Add to Cart</button>
+            <img src="https://via.placeholder.com/300" alt="Bluetooth Speaker">
+            <h3 class="product-title">Portable Bluetooth Speaker - Waterproof</h3>
+            <div class="product-rating">★★★★☆ (3,891)</div>
+            <div class="product-price">$45.99</div>
+            <div class="product-prime">FREE delivery for Prime members</div>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
         
         <div class="product-card">
-            <img src="https://via.placeholder.com/200" alt="Product 4">
-            <h3>Laptop Backpack</h3>
-            <div class="price">$29.99</div>
-            <p>Durable backpack with USB charging port</p>
-            <button>Add to Cart</button>
+            <img src="https://via.placeholder.com/300" alt="Laptop Backpack">
+            <h3 class="product-title">Anti-Theft Laptop Backpack with USB Port</h3>
+            <div class="product-rating">★★★★★ (4,321)</div>
+            <div class="product-price">$34.99</div>
+            <div class="product-prime">FREE delivery for Prime members</div>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
     </div>
     
-    <footer>
-        <p>&copy; 2023 MyAmazon. All rights reserved.</p>
-    </footer>
+    <!-- Footer -->
+    <div class="footer-back">
+        Back to top
+    </div>
+    <div class="footer">
+        <div class="footer-links">
+            <div class="footer-column">
+                <h3>Get to Know Us</h3>
+                <ul>
+                    <li>About Us</li>
+                    <li>Careers</li>
+                    <li>Press Releases</li>
+                    <li>ZonMy Science</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Make Money with Us</h3>
+                <ul>
+                    <li>Sell products</li>
+                    <li>Sell apps</li>
+                    <li>Become an Affiliate</li>
+                    <li>Advertise Your Products</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Payment Products</h3>
+                <ul>
+                    <li>ZonMy Business Card</li>
+                    <li>Shop with Points</li>
+                    <li>Reload Your Balance</li>
+                    <li>Currency Converter</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Let Us Help You</h3>
+                <ul>
+                    <li>Your Account</li>
+                    <li>Your Orders</li>
+                    <li>Shipping Rates</li>
+                    <li>Help</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     
     <script>
-        // Basic JavaScript functionality
+        // Basic functionality
         document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.product-card button');
-            const cartCount = document.querySelector('.nav-links a:last-child');
-            let count = 0;
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const cartElement = document.querySelector('.cart');
+            
+            let cartCount = 0;
             
             addToCartButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    count++;
-                    cartCount.textContent = `Cart (${count})`;
-                    alert('Product added to cart!');
+                    cartCount++;
+                    cartElement.innerHTML = `<span>Cart ${cartCount}</span>`;
+                    
+                    // Show confirmation
+                    const productTitle = this.closest('.product-card').querySelector('.product-title').textContent;
+                    alert(`Added to cart: ${productTitle}`);
                 });
+            });
+            
+            // Search functionality
+            const searchButton = document.querySelector('.search-button');
+            searchButton.addEventListener('click', function() {
+                const searchQuery = document.querySelector('.search-input').value;
+                alert(`Searching for: ${searchQuery}`);
+                // In a real app, this would redirect to search results
             });
         });
     </script>
