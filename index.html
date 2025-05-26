@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZonMy - Online Shopping</title>
+    <title>ZonMax - Online Shopping</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset and Base Styles */
+        :root {
+            --primary-color: #131921;
+            --secondary-color: #232f3e;
+            --accent-color: #ff9900;
+            --price-color: #b12704;
+            --prime-color: #007185;
+            --light-gray: #eaeded;
+            --white: #ffffff;
+            --text-dark: #0f1111;
+            --text-light: #dddddd;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,98 +27,146 @@
         }
         
         body {
-            background-color: #EAEDED;
-            color: #0F1111;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Header Styles */
         .navbar {
-            background-color: #131921;
+            background-color: var(--primary-color);
             height: 60px;
             display: flex;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 10px;
             position: sticky;
             top: 0;
             z-index: 100;
+            flex-wrap: wrap;
         }
         
         .logo {
-            color: #FF9900;
+            color: var(--accent-color);
             font-size: 24px;
             font-weight: bold;
-            margin-right: 20px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 5px;
         }
         
         .delivery-info {
-            color: white;
+            color: var(--white);
             font-size: 12px;
-            margin-right: 20px;
+            margin-right: 15px;
+            display: none;
+        }
+        
+        .delivery-info .location-icon {
+            display: flex;
+            align-items: center;
         }
         
         .search-bar {
             display: flex;
-            flex-grow: 1;
-            margin: 0 20px;
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
         }
         
         .search-select {
-            background-color: #F3F3F3;
+            background-color: #f3f3f3;
             border: none;
             border-radius: 4px 0 0 4px;
             padding: 10px;
             width: 50px;
+            font-size: 12px;
+            cursor: pointer;
         }
         
         .search-input {
             width: 100%;
             padding: 10px;
             border: none;
+            font-size: 14px;
         }
         
         .search-button {
-            background-color: #FEBD69;
+            background-color: var(--accent-color);
             border: none;
             border-radius: 0 4px 4px 0;
-            padding: 10px 15px;
+            padding: 0 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .nav-options {
             display: flex;
-            color: white;
-            margin-left: 20px;
+            color: var(--white);
+            margin-left: 10px;
         }
         
         .nav-option {
-            margin: 0 10px;
+            margin: 0 8px;
             font-size: 12px;
+            padding: 5px;
+            cursor: pointer;
         }
         
         .nav-option span:first-child {
             font-size: 10px;
+            display: block;
         }
         
         .nav-option span:last-child {
             font-weight: bold;
             font-size: 13px;
+            display: block;
         }
         
         .cart {
             display: flex;
             align-items: center;
-            color: white;
-            margin-left: 20px;
+            color: var(--white);
+            margin-left: 10px;
+            padding: 5px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            left: 20px;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
         
         /* Secondary Navbar */
         .secondary-nav {
-            background-color: #232F3E;
+            background-color: var(--secondary-color);
             height: 40px;
             display: flex;
             align-items: center;
-            padding: 0 20px;
-            color: white;
+            padding: 0 10px;
+            color: var(--white);
+            overflow-x: auto;
+            white-space: nowrap;
         }
         
         .nav-menu {
@@ -116,13 +177,21 @@
         .nav-menu li {
             margin-right: 15px;
             font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu {
+            display: none;
+            margin-right: 10px;
+            cursor: pointer;
         }
         
         /* Hero Section */
         .hero {
-            height: 300px;
-            background-image: url('https://via.placeholder.com/1500x300');
+            height: 200px;
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://via.placeholder.com/1200x300');
             background-size: cover;
+            background-position: center;
             display: flex;
             justify-content: center;
             align-items: flex-end;
@@ -130,87 +199,288 @@
         }
         
         /* Product Grid */
+        .product-section {
+            padding: 0 10px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .see-all {
+            font-size: 14px;
+            color: var(--prime-color);
+            cursor: pointer;
+        }
+        
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            margin-top: -150px;
-            z-index: 1;
-            position: relative;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
         }
         
         .product-card {
-            background-color: white;
-            padding: 20px;
+            background-color: var(--white);
+            padding: 15px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--price-color);
+            color: var(--white);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            z-index: 1;
         }
         
         .product-card img {
             width: 100%;
-            height: 200px;
+            height: 150px;
             object-fit: contain;
             margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.05);
         }
         
         .product-title {
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 10px;
             flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .product-rating {
-            color: #FFA41C;
-            margin-bottom: 10px;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-size: 12px;
         }
         
         .product-price {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            color: #B12704;
-            margin-bottom: 10px;
+            color: var(--price-color);
+            margin-bottom: 8px;
+        }
+        
+        .product-price .original {
+            text-decoration: line-through;
+            color: #565959;
+            font-size: 12px;
+            margin-left: 5px;
         }
         
         .product-prime {
-            color: #007185;
-            font-size: 14px;
+            color: var(--prime-color);
+            font-size: 12px;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-prime i {
+            margin-right: 5px;
+            color: var(--accent-color);
         }
         
         .add-to-cart {
-            background-color: #FFD814;
+            background-color: #ffd814;
             border: none;
             border-radius: 20px;
             padding: 8px 15px;
             cursor: pointer;
             width: 100%;
+            font-size: 13px;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #f7ca00;
+        }
+        
+        /* Sidebar Cart */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: var(--white);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .cart-sidebar.active {
+            right: 0;
+        }
+        
+        .cart-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-right: 15px;
+        }
+        
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        
+        .cart-item-title {
             font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            font-weight: bold;
+            color: var(--price-color);
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quantity-btn {
+            background-color: #f0f2f2;
+            border: 1px solid #d5d9d9;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .quantity-input {
+            width: 40px;
+            height: 25px;
+            text-align: center;
+            border: 1px solid #d5d9d9;
+            margin: 0 5px;
+        }
+        
+        .remove-item {
+            color: var(--prime-color);
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        
+        .cart-footer {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .cart-subtotal {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .checkout-btn {
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
         }
         
         /* Footer */
-        .footer {
-            background-color: #131921;
-            color: white;
-            padding: 40px 20px;
-        }
-        
         .footer-back {
-            background-color: #131921;
+            background-color: var(--secondary-color);
             height: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: white;
+            color: var(--white);
             font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 30px 20px;
+            margin-top: auto;
         }
         
         .footer-links {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             max-width: 1200px;
             margin: 0 auto;
@@ -227,18 +497,70 @@
         
         .footer-column li {
             margin-bottom: 10px;
-            font-size: 14px;
-            color: #DDD;
+            font-size: 12px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0 0;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .delivery-info {
+                display: block;
+            }
+            
+            .hero {
+                height: 300px;
+            }
+            
+            .product-card img {
+                height: 200px;
+            }
+            
+            .footer-links {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-option span:first-child {
+                display: none;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header/Navbar -->
     <div class="navbar">
-        <div class="logo">ZonMy</div>
+        <div class="hamburger-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+            <i class="fab fa-amazon"></i>
+            <span>ZonMax</span>
+        </div>
         <div class="delivery-info">
-            <span>Deliver to</span><br>
-            <span>United States</span>
+            <div class="location-icon">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <span>Deliver to</span><br>
+                    <span>United States</span>
+                </div>
+            </div>
         </div>
         <div class="search-bar">
             <select class="search-select">
@@ -246,21 +568,26 @@
                 <option>Electronics</option>
                 <option>Home</option>
                 <option>Books</option>
+                <option>Toys</option>
             </select>
-            <input type="text" class="search-input" placeholder="Search ZonMy">
-            <button class="search-button">Search</button>
+            <input type="text" class="search-input" placeholder="Search ZonMax">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
         </div>
         <div class="nav-options">
             <div class="nav-option">
-                <span>Hello, Sign in</span><br>
+                <span>Hello, Sign in</span>
                 <span>Account & Lists</span>
             </div>
             <div class="nav-option">
-                <span>Returns</span><br>
+                <span>Returns</span>
                 <span>& Orders</span>
             </div>
             <div class="cart">
+                <i class="fas fa-shopping-cart"></i>
                 <span>Cart</span>
+                <span class="cart-count">0</span>
             </div>
         </div>
     </div>
@@ -268,6 +595,7 @@
     <!-- Secondary Navbar -->
     <div class="secondary-nav">
         <ul class="nav-menu">
+            <li><i class="fas fa-bars"></i> All</li>
             <li>Today's Deals</li>
             <li>Customer Service</li>
             <li>Registry</li>
@@ -279,44 +607,210 @@
     <!-- Hero Section -->
     <div class="hero"></div>
     
-    <!-- Product Grid -->
-    <div class="product-grid">
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300" alt="Wireless Earbuds">
-            <h3 class="product-title">Premium Wireless Earbuds with Noise Cancellation</h3>
-            <div class="product-rating">★★★★☆ (1,234)</div>
-            <div class="product-price">$89.99</div>
-            <div class="product-prime">FREE delivery for Prime members</div>
-            <button class="add-to-cart">Add to Cart</button>
+    <!-- Product Sections -->
+    <div class="product-section">
+        <div class="section-title">
+            <h2>Deals & Promotions</h2>
+            <span class="see-all">See all</span>
         </div>
-        
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300" alt="Smart Watch">
-            <h3 class="product-title">Fitness Smart Watch with Heart Rate Monitor</h3>
-            <div class="product-rating">★★★★★ (2,567)</div>
-            <div class="product-price">$129.99</div>
-            <div class="product-prime">FREE delivery for Prime members</div>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
-        
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300" alt="Bluetooth Speaker">
-            <h3 class="product-title">Portable Bluetooth Speaker - Waterproof</h3>
-            <div class="product-rating">★★★★☆ (3,891)</div>
-            <div class="product-price">$45.99</div>
-            <div class="product-prime">FREE delivery for Prime members</div>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
-        
-        <div class="product-card">
-            <img src="https://via.placeholder.com/300" alt="Laptop Backpack">
-            <h3 class="product-title">Anti-Theft Laptop Backpack with USB Port</h3>
-            <div class="product-rating">★★★★★ (4,321)</div>
-            <div class="product-price">$34.99</div>
-            <div class="product-prime">FREE delivery for Prime members</div>
-            <button class="add-to-cart">Add to Cart</button>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-badge">30% off</div>
+                <img src="https://m.media-amazon.com/images/I/71KBQ+0gQmL._AC_UL320_.jpg" alt="Wireless Earbuds">
+                <h3 class="product-title">Premium Wireless Earbuds with Noise Cancellation</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>(1,234)</span>
+                </div>
+                <div class="product-price">
+                    $89.99 <span class="original">$129.99</span>
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">Best Seller</div>
+                <img src="https://m.media-amazon.com/images/I/71h6PpGaz9L._AC_UL320_.jpg" alt="Smart Watch">
+                <h3 class="product-title">Fitness Smart Watch with Heart Rate Monitor</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>(2,567)</span>
+                </div>
+                <div class="product-price">
+                    $129.99
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">Limited Deal</div>
+                <img src="https://m.media-amazon.com/images/I/61vqJ6OoPML._AC_UL320_.jpg" alt="Bluetooth Speaker">
+                <h3 class="product-title">Portable Bluetooth Speaker - Waterproof</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <span>(3,891)</span>
+                </div>
+                <div class="product-price">
+                    $45.99 <span class="original">$59.99</span>
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/81r5H+QNwYL._AC_UL320_.jpg" alt="Laptop Backpack">
+                <h3 class="product-title">Anti-Theft Laptop Backpack with USB Port</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>(4,321)</span>
+                </div>
+                <div class="product-price">
+                    $34.99
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
         </div>
     </div>
+    
+    <div class="product-section">
+        <div class="section-title">
+            <h2>Recommended for You</h2>
+            <span class="see-all">See all</span>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg" alt="Smart Bulb">
+                <h3 class="product-title">Smart Light Bulb, Works with Alexa & Google Home</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <span>(1,876)</span>
+                </div>
+                <div class="product-price">
+                    $19.99 <span class="original">$24.99</span>
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">New</div>
+                <img src="https://m.media-amazon.com/images/I/61L1ItFgFHL._AC_UL320_.jpg" alt="Air Fryer">
+                <h3 class="product-title">Digital Air Fryer with 8 Cooking Presets</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span>(3,245)</span>
+                </div>
+                <div class="product-price">
+                    $79.99
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg" alt="Coffee Maker">
+                <h3 class="product-title">Programmable Coffee Maker with Timer</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <span>(2,109)</span>
+                </div>
+                <div class="product-price">
+                    $49.99
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-badge">Top Rated</div>
+                <img src="https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg" alt="Robot Vacuum">
+                <h3 class="product-title">Robot Vacuum Cleaner with Smart Mapping</h3>
+                <div class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <span>(5,432)</span>
+                </div>
+                <div class="product-price">
+                    $249.99 <span class="original">$299.99</span>
+                </div>
+                <div class="product-prime">
+                    <i class="fas fa-check"></i> FREE delivery for Prime members
+                </div>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sidebar Cart -->
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <div class="empty-cart-message">Your cart is empty</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal (0 items):</span>
+                <span>$0.00</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    
+    <div class="overlay"></div>
     
     <!-- Footer -->
     <div class="footer-back">
@@ -330,7 +824,7 @@
                     <li>About Us</li>
                     <li>Careers</li>
                     <li>Press Releases</li>
-                    <li>ZonMy Science</li>
+                    <li>ZonMax Science</li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -345,7 +839,7 @@
             <div class="footer-column">
                 <h3>Payment Products</h3>
                 <ul>
-                    <li>ZonMy Business Card</li>
+                    <li>ZonMax Business Card</li>
                     <li>Shop with Points</li>
                     <li>Reload Your Balance</li>
                     <li>Currency Converter</li>
@@ -361,35 +855,244 @@
                 </ul>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>© 2023 ZonMax.com, Inc. or its affiliates</p>
+        </div>
     </div>
     
     <script>
-        // Basic functionality
+        // Cart functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Add to cart functionality
-            const addToCartButtons = document.querySelectorAll('.add-to-cart');
-            const cartElement = document.querySelector('.cart');
-            
-            let cartCount = 0;
-            
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    cartCount++;
-                    cartElement.innerHTML = `<span>Cart ${cartCount}</span>`;
+            const cart = {
+                items: [],
+                total: 0,
+                
+                init: function() {
+                    this.loadCart();
+                    this.renderCart();
+                    this.setupEventListeners();
+                },
+                
+                loadCart: function() {
+                    const savedCart = localStorage.getItem('zonmaxCart');
+                    if (savedCart) {
+                        const cartData = JSON.parse(savedCart);
+                        this.items = cartData.items || [];
+                        this.total = cartData.total || 0;
+                    }
+                },
+                
+                saveCart: function() {
+                    localStorage.setItem('zonmaxCart', JSON.stringify({
+                        items: this.items,
+                        total: this.total
+                    }));
+                },
+                
+                addItem: function(product) {
+                    const existingItem = this.items.find(item => item.id === product.id);
                     
-                    // Show confirmation
-                    const productTitle = this.closest('.product-card').querySelector('.product-title').textContent;
-                    alert(`Added to cart: ${productTitle}`);
-                });
-            });
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        this.items.push({
+                            id: product.id,
+                            title: product.title,
+                            price: product.price,
+                            image: product.image,
+                            quantity: 1
+                        });
+                    }
+                    
+                    this.total += product.price;
+                    this.saveCart();
+                    this.renderCart();
+                    this.updateCartCount();
+                    
+                    // Show added notification
+                    this.showNotification(`${product.title} was added to your cart`);
+                },
+                
+                removeItem: function(itemId) {
+                    const itemIndex = this.items.findIndex(item => item.id === itemId);
+                    if (itemIndex !== -1) {
+                        const item = this.items[itemIndex];
+                        this.total -= item.price * item.quantity;
+                        this.items.splice(itemIndex, 1);
+                        this.saveCart();
+                        this.renderCart();
+                        this.updateCartCount();
+                    }
+                },
+                
+                updateQuantity: function(itemId, newQuantity) {
+                    const item = this.items.find(item => item.id === itemId);
+                    if (item && newQuantity > 0) {
+                        this.total -= item.price * item.quantity;
+                        item.quantity = newQuantity;
+                        this.total += item.price * item.quantity;
+                        this.saveCart();
+                        this.renderCart();
+                        this.updateCartCount();
+                    }
+                },
+                
+                renderCart: function() {
+                    const cartItemsEl = document.querySelector('.cart-items');
+                    const subtotalEl = document.querySelector('.cart-subtotal span:last-child');
+                    
+                    if (this.items.length === 0) {
+                        cartItemsEl.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>';
+                        subtotalEl.textContent = '$0.00';
+                        return;
+                    }
+                    
+                    cartItemsEl.innerHTML = '';
+                    
+                    this.items.forEach(item => {
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'cart-item';
+                        itemEl.innerHTML = `
+                            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+                            <div class="cart-item-details">
+                                <h4 class="cart-item-title">${item.title}</h4>
+                                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                                <div class="cart-item-quantity">
+                                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                                </div>
+                                <div class="remove-item" data-id="${item.id}">Delete</div>
+                            </div>
+                        `;
+                        cartItemsEl.appendChild(itemEl);
+                    });
+                    
+                    subtotalEl.textContent = `$${this.total.toFixed(2)}`;
+                    
+                    // Add event listeners to quantity controls
+                    document.querySelectorAll('.quantity-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const itemId = e.target.getAttribute('data-id');
+                            const input = document.querySelector(`.quantity-input[data-id="${itemId}"]`);
+                            let quantity = parseInt(input.value);
+                            
+                            if (e.target.classList.contains('minus')) {
+                                quantity = Math.max(1, quantity - 1);
+                            } else if (e.target.classList.contains('plus')) {
+                                quantity += 1;
+                            }
+                            
+                            input.value = quantity;
+                            this.updateQuantity(itemId, quantity);
+                        });
+                    });
+                    
+                    // Add event listeners to quantity inputs
+                    document.querySelectorAll('.quantity-input').forEach(input => {
+                        input.addEventListener('change', (e) => {
+                            const itemId = e.target.getAttribute('data-id');
+                            const quantity = parseInt(e.target.value) || 1;
+                            this.updateQuantity(itemId, quantity);
+                        });
+                    });
+                    
+                    // Add event listeners to remove buttons
+                    document.querySelectorAll('.remove-item').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const itemId = e.target.getAttribute('data-id');
+                            this.removeItem(itemId);
+                        });
+                    });
+                },
+                
+                updateCartCount: function() {
+                    const count = this.items.reduce((total, item) => total + item.quantity, 0);
+                    document.querySelector('.cart-count').textContent = count;
+                },
+                
+                showNotification: function(message) {
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = message;
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.right = '20px';
+                    notification.style.backgroundColor = '#131921';
+                    notification.style.color = 'white';
+                    notification.style.padding = '15px 20px';
+                    notification.style.borderRadius = '4px';
+                    notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+                    notification.style.zIndex = '1000';
+                    notification.style.animation = 'slideIn 0.3s, slideOut 0.3s 2.7s';
+                    
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                },
+                
+                setupEventListeners: function() {
+                    // Add to cart buttons
+                    document.querySelectorAll('.add-to-cart').forEach((btn, index) => {
+                        btn.addEventListener('click', () => {
+                            const productCard = btn.closest('.product-card');
+                            const product = {
+                                id: `prod-${index + 1}`,
+                                title: productCard.querySelector('.product-title').textContent,
+                                price: parseFloat(productCard.querySelector('.product-price').textContent.replace('$', '')),
+                                image: productCard.querySelector('img').src
+                            };
+                            this.addItem(product);
+                        });
+                    });
+                    
+                    // Cart toggle
+                    document.querySelector('.cart').addEventListener('click', () => {
+                        document.querySelector('.cart-sidebar').classList.add('active');
+                        document.querySelector('.overlay').classList.add('active');
+                    });
+                    
+                    // Close cart
+                    document.querySelector('.close-cart').addEventListener('click', () => {
+                        document.querySelector('.cart-sidebar').classList.remove('active');
+                        document.querySelector('.overlay').classList.remove('active');
+                    });
+                    
+                    // Overlay click
+                    document.querySelector('.overlay').addEventListener('click', () => {
+                        document.querySelector('.cart-sidebar').classList.remove('active');
+                        document.querySelector('.overlay').classList.remove('active');
+                    });
+                    
+                    // Back to top
+                    document.querySelector('.footer-back').addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                    
+                    // Initialize cart count
+                    this.updateCartCount();
+                }
+            };
             
-            // Search functionality
-            const searchButton = document.querySelector('.search-button');
-            searchButton.addEventListener('click', function() {
-                const searchQuery = document.querySelector('.search-input').value;
-                alert(`Searching for: ${searchQuery}`);
-                // In a real app, this would redirect to search results
-            });
+            // Initialize the cart
+            cart.init();
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
