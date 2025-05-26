@@ -1235,3 +1235,128 @@
             </div>
             <div class="deal-card" data-id="deal2">
                 <div class="deal-b
+                <!-- Add this modal structure before </body> -->
+<div class="product-modal" id="productModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Product Details</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- Dynamic content inserted via JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- Updated Hero Section -->
+<div class="hero-carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="background-image: url('https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg')">
+            <div class="carousel-caption">
+                <h3>Deal of the Day</h3>
+                <button class="shop-now">Shop Now</button>
+            </div>
+        </div>
+        <!-- Add more carousel items -->
+    </div>
+</div>
+
+<!-- Updated Today's Deals Section -->
+<div class="todays-deals">
+    <div class="deals-header">
+        <h2>Today's Deals <span class="countdown">23h 59m remaining</span></h2>
+        <a href="#" class="see-all">See all deals</a>
+    </div>
+    <div class="deals-grid">
+        <div class="deal-card" data-product="1">
+            <div class="deal-badge">30% off</div>
+            <img src="https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg" alt="Product">
+            <div class="deal-content">
+                <div class="price">$19.99 <span class="original">$29.99</span></div>
+                <div class="title">Smart Light Bulb</div>
+                <div class="prime">Prime</div>
+            </div>
+        </div>
+        <!-- Add more deal cards -->
+    </div>
+</div>
+
+<!-- Amazon-Style Search Bar -->
+<div class="search-bar">
+    <select class="search-category">
+        <option>All</option>
+        <!-- Add more options -->
+    </select>
+    <input type="text" class="search-input" placeholder="Search Amazon">
+    <button class="search-button">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+
+<style>
+    /* Updated Search Bar Styles */
+    .search-bar {
+        display: flex;
+        max-width: 900px;
+        margin: 0 auto;
+        height: 40px;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .search-category {
+        background: #f3f3f3;
+        border: none;
+        border-right: 1px solid #ddd;
+        padding: 0 15px;
+        font-size: 12px;
+        appearance: none;
+    }
+    
+    .search-input {
+        flex: 1;
+        border: none;
+        padding: 0 15px;
+        font-size: 14px;
+    }
+    
+    .search-button {
+        background: #febd69;
+        border: none;
+        width: 45px;
+        border-left: 1px solid #ddd;
+    }
+
+    /* Product Modal Styles */
+    .product-modal {
+        /* Add modal styles */
+    }
+</style>
+
+<script>
+    // Product Modal Logic
+    document.querySelectorAll('.deal-card, .product-card').forEach(item => {
+        item.addEventListener('click', function() {
+            const productId = this.dataset.product;
+            showProductModal(productId);
+        });
+    });
+
+    function showProductModal(productId) {
+        // Fetch product details and populate modal
+        const modal = document.getElementById('productModal');
+        // Add product details dynamically
+        modal.style.display = 'block';
+    }
+
+    // Carousel Logic
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+    
+    function showSlide(n) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        currentSlide = (n + slides.length) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+</script>
