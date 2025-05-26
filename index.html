@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Falmata's Pro E-commerce Store</title>
+<title>Falmata's Pro E-commerce Store — Categories</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 
 <style>
-  /* Basic reset & typography */
+  /* Reset and base */
   * {
     box-sizing: border-box;
   }
   body {
     font-family: 'Poppins', sans-serif;
-    background: #121212;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: #e0e0e0;
     margin: 0;
     padding: 0 1rem 3rem;
@@ -29,16 +29,48 @@
   header {
     width: 100%;
     max-width: 900px;
-    padding: 1.5rem 0;
+    padding: 2rem 0 1rem;
     text-align: center;
-    border-bottom: 2px solid #00ffe1;
-    margin-bottom: 1.5rem;
+    border-bottom: 3px solid #00ffe1;
+    margin-bottom: 1rem;
   }
   header h1 {
     margin: 0;
     font-weight: 600;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     color: #00ffe1;
+    letter-spacing: 1px;
+  }
+
+  /* Category Tabs */
+  .categories {
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .category-btn {
+    background: transparent;
+    border: 2px solid #00ffe1;
+    color: #00ffe1;
+    padding: 0.6rem 1.4rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    user-select: none;
+  }
+  .category-btn:hover {
+    background-color: #00ffe1;
+    color: #121212;
+  }
+  .category-btn.active {
+    background-color: #00ffe1;
+    color: #121212;
+    box-shadow: 0 0 15px #00ffe1cc;
   }
 
   /* Store container */
@@ -59,21 +91,21 @@
     gap: 1.5rem;
   }
 
-  /* Single product card */
+  /* Product card */
   .product {
-    background: #1e1e1e;
+    background: #1a1a1acc;
     border-radius: 10px;
-    box-shadow: 0 0 15px #00ffe1aa;
+    box-shadow: 0 0 20px #00ffe1aa;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
   }
   .product:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 30px #00fff0cc;
+    transform: translateY(-10px);
+    box-shadow: 0 0 40px #00fff0cc;
   }
   .product img {
     width: 100%;
@@ -103,7 +135,7 @@
     background: #00ffe1;
     color: #121212;
     border: none;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1.3rem;
     border-radius: 30px;
     font-weight: 600;
     cursor: pointer;
@@ -116,10 +148,10 @@
   /* Cart sidebar */
   .cart {
     flex: 0 0 280px;
-    background: #1e1e1e;
+    background: #1a1a1acc;
     border-radius: 10px;
     padding: 1rem 1.2rem;
-    box-shadow: 0 0 20px #00ffe1aa;
+    box-shadow: 0 0 30px #00ffe1bb;
     height: fit-content;
     position: sticky;
     top: 1rem;
@@ -177,7 +209,7 @@
   .cart-total {
     border-top: 2px solid #00ffe1;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: right;
     padding-top: 1rem;
     color: #00ffe1;
@@ -220,6 +252,11 @@
   <h1>Falmata's Pro E-commerce Store</h1>
 </header>
 
+<!-- Category Tabs -->
+<nav class="categories" aria-label="Product Categories">
+  <!-- Buttons will be dynamically added here -->
+</nav>
+
 <div class="store" role="main">
 
   <!-- Products Grid -->
@@ -238,57 +275,110 @@
 </div>
 
 <script>
-  // PRODUCTS DATA - Add your products here with id, name, desc, price and image link
+  // PRODUCTS DATA - Added categories now
   const products = [
     {
       id: 1,
       name: "Falmata's Classic Tee",
       description: "Comfortable cotton t-shirt with a clean design.",
       price: 19.99,
-      image: "https://i.postimg.cc/4xgyHKCQ/59757286-804.jpg"
+      image: "https://i.postimg.cc/4xgyHKCQ/59757286-804.jpg",
+      category: "Tees"
     },
     {
       id: 2,
       name: "Pro Gamer Mug",
       description: "Start your day with some gaming fuel.",
       price: 14.99,
-      image: "https://i.postimg.cc/jd0w12W1/gaming-mug.png"
+      image: "https://i.postimg.cc/jd0w12W1/gaming-mug.png",
+      category: "Mugs"
     },
     {
       id: 3,
       name: "Wireless Headphones",
       description: "High quality sound and wireless freedom.",
       price: 79.99,
-      image: "https://i.postimg.cc/htGm4sKm/wireless-headphones.png"
+      image: "https://i.postimg.cc/htGm4sKm/wireless-headphones.png",
+      category: "Electronics"
     },
     {
       id: 4,
       name: "Stylish Backpack",
       description: "Keep your essentials safe and stylish.",
       price: 49.99,
-      image: "https://i.postimg.cc/mD2Q1WGy/backpack.png"
+      image: "https://i.postimg.cc/mD2Q1WGy/backpack.png",
+      category: "Bags"
+    },
+    {
+      id: 5,
+      name: "Gaming Tee Special",
+      description: "Limited edition gamer t-shirt.",
+      price: 25.99,
+      image: "https://i.postimg.cc/cJXwr3jh/gaming-tee.png",
+      category: "Tees"
+    },
+    {
+      id: 6,
+      name: "Coffee Mug Extra",
+      description: "Large size coffee mug for all caffeine lovers.",
+      price: 18.99,
+      image: "https://i.postimg.cc/fyCjLfP7/coffee-mug.png",
+      category: "Mugs"
     }
   ];
+
+  // Extract unique categories plus "All"
+  const categories = ["All", ...new Set(products.map(p => p.category))];
 
   // CART STATE
   const cart = {};
 
   // DOM elements
+  const categoriesContainer = document.querySelector('.categories');
   const productsContainer = document.querySelector('.products');
   const cartList = document.querySelector('.cart-list');
   const cartTotal = document.querySelector('.cart-total');
+
+  let activeCategory = "All";
 
   // FORMAT PRICE to $X.XX
   function formatPrice(num) {
     return '$' + num.toFixed(2);
   }
 
-  // RENDER PRODUCTS on page load
+  // Render category buttons
+  function renderCategories() {
+    categoriesContainer.innerHTML = '';
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'category-btn';
+      btn.textContent = cat;
+      btn.setAttribute('aria-pressed', cat === activeCategory);
+      if (cat === activeCategory) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        if (activeCategory === cat) return; // no change
+        activeCategory = cat;
+        renderCategories();
+        renderProducts();
+      });
+      categoriesContainer.appendChild(btn);
+    });
+  }
+
+  // RENDER PRODUCTS filtered by active category
   function renderProducts() {
-    products.forEach(product => {
+    productsContainer.innerHTML = '';
+    const filteredProducts = activeCategory === "All" ? products : products.filter(p => p.category === activeCategory);
+
+    if (filteredProducts.length === 0) {
+      productsContainer.innerHTML = '<p style="color:#aaa; text-align:center;">No products found in this category.</p>';
+      return;
+    }
+
+    filteredProducts.forEach(product => {
       const productDiv = document.createElement('div');
       productDiv.className = 'product';
-      productDiv.setAttribute('tabindex', '0'); // keyboard accessible
+      productDiv.setAttribute('tabindex', '0');
       productDiv.innerHTML = `
         <img src="${product.image}" alt="${product.name}" />
         <h3>${product.name}</h3>
@@ -296,7 +386,6 @@
         <div class="price">${formatPrice(product.price)}</div>
         <button aria-label="Add ${product.name} to cart">Add to Cart</button>
       `;
-      // Add to cart button click handler
       productDiv.querySelector('button').addEventListener('click', () => {
         addToCart(product.id);
       });
@@ -340,7 +429,6 @@
     cartList.innerHTML = '';
     let total = 0;
 
-    // if cart empty
     if (Object.keys(cart).length === 0) {
       cartList.innerHTML = '<li>Your cart is empty</li>';
       cartTotal.textContent = 'Total: $0.00';
@@ -364,7 +452,6 @@
         <span class="cart-item-price">${formatPrice(itemTotal)}</span>
       `;
 
-      // quantity buttons
       const btns = li.querySelectorAll('button');
       btns[0].addEventListener('click', () => updateQty(item.id, -1));
       btns[1].addEventListener('click', () => updateQty(item.id, 1));
@@ -382,7 +469,6 @@
       return;
     }
     alert('Thanks for your order! (This is just a demo.)');
-    // Reset cart after checkout
     for (const key in cart) {
       delete cart[key];
     }
@@ -390,8 +476,10 @@
   });
 
   // INITIALIZE
+  renderCategories();
   renderProducts();
   renderCart();
+
 </script>
 
 </body>
