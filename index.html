@@ -1,148 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amazon Clone</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Amazon Clone Training Site</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f3f3f3; }
-    header { background: #131921; color: white; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 24px; font-weight: bold; }
-    .search-bar input { width: 400px; padding: 8px; border: none; border-radius: 4px; }
-    .nav-links a { color: white; margin: 0 10px; text-decoration: none; }
-    .hero { background: url('https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg') no-repeat center/cover; height: 300px; }
-    .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
-    .product { background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
-    .product img { width: 100%; height: 200px; object-fit: contain; }
-    .product h3 { font-size: 16px; margin: 10px 0; }
-    .product .price { color: #b12704; font-weight: bold; }
-    .stars { color: #ffa41c; }
-    .prime { color: #0073b1; font-size: 12px; margin-top: 4px; }
-    .actions button { margin: 5px 0; width: 100%; padding: 6px; background: #ffd814; border: none; border-radius: 5px; cursor: pointer; }
-    .actions .buy { background: #ffa41c; }
-    footer { background: #232f3e; color: white; text-align: center; padding: 20px 10px; margin-top: 30px; }
-    .cart-sidebar { position: fixed; right: -300px; top: 0; width: 300px; height: 100%; background: white; box-shadow: -2px 0 5px rgba(0,0,0,0.2); transition: right 0.3s ease; padding: 20px; overflow-y: auto; z-index: 1000; }
-    .cart-sidebar.active { right: 0; }
-    .cart-header { display: flex; justify-content: space-between; align-items: center; }
-    .cart-footer { margin-top: 20px; }
-    .cart-items { margin-top: 10px; }
-    .overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 900; }
-    .overlay.active { display: block; }
+    /* Reset and base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #e3e6e6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .navbar {
+      background-color: #131921;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .search-bar {
+      flex: 1;
+      margin: 0 20px;
+      position: relative;
+    }
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+    }
+    .search-bar i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #555;
+    }
+
+    /* Hero Banner */
+    .hero {
+      width: 100%;
+      height: 300px;
+      background: url('https://m.media-amazon.com/images/I/61lwJy4B8PL._SX3000_.jpg') no-repeat center center/cover;
+      animation: rotateBanner 10s infinite;
+    }
+    @keyframes rotateBanner {
+      0% { background-image: url('https://m.media-amazon.com/images/I/61lwJy4B8PL._SX3000_.jpg'); }
+      50% { background-image: url('https://m.media-amazon.com/images/I/71Ie3JXGfVL._SX3000_.jpg'); }
+      100% { background-image: url('https://m.media-amazon.com/images/I/61lwJy4B8PL._SX3000_.jpg'); }
+    }
+
+    /* Products */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .product-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: scale(1.02);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+    }
+    .product-title {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      width: 300px;
+      height: 100vh;
+      background: white;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+      transition: right 0.3s ease-in-out;
+      z-index: 999;
+      padding: 20px;
+    }
+    .cart-sidebar.open {
+      right: 0;
+    }
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-items {
+      margin: 20px 0;
+    }
+    .checkout-btn {
+      background: #febd69;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Product Detail */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px;
+      max-width: 500px;
+      border-radius: 8px;
+    }
   </style>
 </head>
+
 <body>
-
-<header>
-  <div class="logo">ZonMax</div>
-  <div class="search-bar"><input type="text" placeholder="Search ZonMax"></div>
-  <div class="nav-links">
-    <a href="#">Sign In</a>
-    <a href="#">Orders</a>
-    <a href="#" onclick="toggleCart()"><i class="fas fa-shopping-cart"></i> Cart</a>
+  <div class="navbar">
+    <div class="logo">ZonMax</div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search Amazon">
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="cart-btn" onclick="toggleCart()">
+      <i class="fas fa-shopping-cart"></i>
+      <span id="cart-count">0</span>
+    </div>
   </div>
-</header>
 
-<div class="hero"></div>
+  <div class="hero"></div>
 
-<div class="products" id="product-list"></div>
-
-<!-- Cart Sidebar -->
-<div class="cart-sidebar" id="cartSidebar">
-  <div class="cart-header">
-    <h3>Your Cart</h3>
-    <button onclick="toggleCart()">&times;</button>
+  <div class="products" id="product-list">
+    <!-- Product cards will go here -->
   </div>
-  <div class="cart-items" id="cartItems"></div>
-  <div class="cart-footer">
-    <div id="cartTotal">Subtotal (0 items): $0.00</div>
-    <button class="checkout">Checkout</button>
+
+  <div class="cart-sidebar" id="cart">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button onclick="toggleCart()">X</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <button class="checkout-btn">Proceed to Checkout</button>
   </div>
-</div>
-<div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
-<footer>
-  <p>&copy; 2025 ZonMax. Built for training by you 💪</p>
-</footer>
+  <div class="modal" id="product-modal">
+    <div class="modal-content" id="modal-content">
+      <!-- Product details here -->
+    </div>
+  </div>
 
-<script>
-  const products = [
-    { id: 1, title: "Smart Light Bulb", price: 19.99, img: "https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg" },
-    { id: 2, title: "Air Fryer XL", price: 79.99, img: "https://m.media-amazon.com/images/I/61L1ItFgFHL._AC_UL320_.jpg" },
-    { id: 3, title: "Coffee Maker", price: 49.99, img: "https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg" },
-    { id: 4, title: "Robot Vacuum", price: 249.99, img: "https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg" },
-    { id: 5, title: "Wireless Mouse", price: 14.99, img: "https://m.media-amazon.com/images/I/61LtuGzXeaL._AC_UL320_.jpg" },
-    { id: 6, title: "Bluetooth Speaker", price: 39.99, img: "https://m.media-amazon.com/images/I/71cQWYVtcBL._AC_UL320_.jpg" },
-    { id: 7, title: "Echo Dot", price: 49.99, img: "https://m.media-amazon.com/images/I/61u48FEs24L._AC_UL320_.jpg" },
-    { id: 8, title: "HDMI Cable", price: 9.99, img: "https://m.media-amazon.com/images/I/61aO1fYJ3tL._AC_UL320_.jpg" },
-    { id: 9, title: "Yoga Mat", price: 25.99, img: "https://m.media-amazon.com/images/I/71DUiDJ+IeL._AC_UL320_.jpg" },
-    { id: 10, title: "Gaming Keyboard", price: 69.99, img: "https://m.media-amazon.com/images/I/71HxrRSLwDL._AC_UL320_.jpg" },
-    { id: 11, title: "USB Hub", price: 15.99, img: "https://m.media-amazon.com/images/I/61eIhXUp8pL._AC_UL320_.jpg" },
-    { id: 12, title: "Portable Charger", price: 34.99, img: "https://m.media-amazon.com/images/I/61drpi3cYUL._AC_UL320_.jpg" },
-    { id: 13, title: "iPhone Case", price: 12.99, img: "https://m.media-amazon.com/images/I/71HBl1eW5rL._AC_UL320_.jpg" },
-    { id: 14, title: "Webcam", price: 44.99, img: "https://m.media-amazon.com/images/I/61I2hchbnGL._AC_UL320_.jpg" },
-    { id: 15, title: "Noise Cancelling Headphones", price: 89.99, img: "https://m.media-amazon.com/images/I/61nPiOOv9BL._AC_UL320_.jpg" }
-  ];
+  <script>
+    const products = [
+      {
+        title: "Smart Light Bulb",
+        image: "https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg",
+        price: 19.99,
+        description: "Smart Light Bulb compatible with Alexa and Google Home."
+      },
+      {
+        title: "Air Fryer",
+        image: "https://m.media-amazon.com/images/I/61L1ItFgFHL._AC_UL320_.jpg",
+        price: 79.99,
+        description: "Digital Air Fryer with 8 presets and touch control."
+      },
+      {
+        title: "Coffee Maker",
+        image: "https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg",
+        price: 49.99,
+        description: "Programmable coffee maker with auto shut-off feature."
+      },
+      {
+        title: "Robot Vacuum",
+        image: "https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg",
+        price: 249.99,
+        description: "Robot Vacuum Cleaner with Smart Mapping."
+      },
+    ];
 
-  const productList = document.getElementById('product-list');
-  const cartItemsEl = document.getElementById('cartItems');
-  const cartTotalEl = document.getElementById('cartTotal');
-  let cart = [];
+    const productList = document.getElementById('product-list');
+    const cart = [];
 
-  function renderProducts() {
-    products.forEach(product => {
-      const el = document.createElement('div');
-      el.classList.add('product');
-      el.innerHTML = `
-        <img src="${product.img}" alt="${product.title}" />
-        <h3>${product.title}</h3>
-        <div class="stars">
-          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-        </div>
-        <div class="price">$${product.price.toFixed(2)}</div>
-        <div class="prime">✔ FREE delivery with Prime</div>
-        <div class="actions">
-          <button onclick='addToCart(${JSON.stringify(product)})'>Add to Cart</button>
-          <button class="buy">Buy Now</button>
-        </div>
-      `;
-      productList.appendChild(el);
-    });
-  }
-
-  function addToCart(product) {
-    cart.push(product);
-    updateCart();
-    toggleCart(true);
-  }
-
-  function updateCart() {
-    cartItemsEl.innerHTML = '';
-    let total = 0;
-    cart.forEach((item, i) => {
-      total += item.price;
-      const div = document.createElement('div');
-      div.innerHTML = `${item.title} - $${item.price.toFixed(2)}`;
-      cartItemsEl.appendChild(div);
-    });
-    cartTotalEl.textContent = `Subtotal (${cart.length} items): $${total.toFixed(2)}`;
-  }
-
-  function toggleCart(forceOpen = false) {
-    const sidebar = document.getElementById('cartSidebar');
-    const overlay = document.getElementById('overlay');
-    const isOpen = sidebar.classList.contains('active');
-    if (forceOpen || !isOpen) {
-      sidebar.classList.add('active');
-      overlay.classList.add('active');
-    } else {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('active');
+    function renderProducts() {
+      productList.innerHTML = '';
+      products.forEach((product, index) => {
+        const div = document.createElement('div');
+        div.className = 'product-card';
+        div.innerHTML = `
+          <img src="${product.image}" alt="${product.title}" />
+          <h3 class="product-title">${product.title}</h3>
+          <div>$${product.price}</div>
+          <button onclick="addToCart(${index})">Add to Cart</button>
+          <button onclick="viewDetails(${index})">View Details</button>
+        `;
+        productList.appendChild(div);
+      });
     }
-  }
 
-  renderProducts();
-</script>
+    function addToCart(index) {
+      cart.push(products[index]);
+      updateCart();
+    }
 
+    function updateCart() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      cart.forEach(item => {
+        const div = document.createElement('div');
+        div.textContent = `${item.title} - $${item.price}`;
+        cartItems.appendChild(div);
+      });
+    }
+
+    function toggleCart() {
+      document.getElementById('cart').classList.toggle('open');
+    }
+
+    function viewDetails(index) {
+      const product = products[index];
+      const modal = document.getElementById('product-modal');
+      const modalContent = document.getElementById('modal-content');
+      modalContent.innerHTML = `
+        <h2>${product.title}</h2>
+        <img src="${product.image}" style="width: 100%; height: 200px; object-fit: contain;">
+        <p>${product.description}</p>
+        <p><strong>Price:</strong> $${product.price}</p>
+        <button onclick="addToCart(${index})">Add to Cart</button>
+        <button onclick="document.getElementById('product-modal').style.display='none'">Close</button>
+      `;
+      modal.style.display = 'flex';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('product-modal');
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    renderProducts();
+  </script>
 </body>
+
 </html>
