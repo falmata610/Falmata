@@ -778,6 +778,145 @@
         }
     </style>
 </head>
+<script>
+  const cartSidebar = document.querySelector('.cart-sidebar');
+  const overlay = document.querySelector('.overlay');
+  const cartCount = document.querySelector('.cart-count');
+  const cartItemsContainer = document.querySelector('.cart-items');
+  const subtotalItemsText = document.querySelector('.cart-subtotal span:first-child');
+  const subtotalAmountText = document.querySelector('.cart-subtotal span:last-child');
+  const emptyCartMessage = document.querySelector('.empty-cart-message');
+  const checkoutBtn = document.querySelector('.checkout-btn');
+  const closeCartBtn = document.querySelector('.close-cart');
+  const cartIcon = document.querySelector('.cart');
+
+  // Open cart sidebar
+  cartIcon.addEventListener('click', () => {
+    cartSidebar.classList.add('active');
+    overlay.classList.add('active');
+  });
+
+  // Close cart sidebar
+  closeCartBtn.addEventListener('click', closeCart);
+  overlay.addEventListener('click', closeCart);
+
+  function closeCart() {
+    cartSidebar.classList.remove('active');
+    overlay.classList.remove('active');
+  }
+
+  // Handle Add to Cart buttons
+  const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const productCard = e.target.closest('.product-card');
+      const title = productCard.querySelector('.product-title').innerText;
+      const priceText = productCard.querySelector('.product-price').innerText;
+      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+      const imgSrc = productCard.querySelector('img').src;
+
+      addItemToCart({ title, price, imgSrc });
+      updateCart();
+      openCart();
+    });
+  });
+
+  // Add or update item in cart
+  function addItemToCart(product) {
+    const existingItem = cartItemsContainer.querySelector(`[data-title="${CSS.escape(product.title)}"]`);
+
+    if (existingItem) {
+      const qtyInput = existingItem.querySelector('.quantity-input');
+      qtyInput.value = parseInt(qtyInput.value) + 1;
+    } else {
+      const cartItem = document.createElement('div');
+      cartItem.classList.add('cart-item');
+      cartItem.setAttribute('data-title', product.title);
+
+      cartItem.innerHTML = `
+        <img src="${product.imgSrc}" alt="${product.title}" />
+        <div class="cart-item-details">
+          <div class="cart-item-title">${product.title}</div>
+          <div class="cart-item-price">$${product.price.toFixed(2)}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn decrement">-</button>
+            <input type="number" class="quantity-input" value="1" min="1" />
+            <button class="qty-btn increment">+</button>
+          </div>
+          <button class="remove-item">Remove</button>
+        </div>
+      `;
+
+      cartItemsContainer.appendChild(cartItem);
+
+      // Attach event listeners for qty buttons and remove
+      const decrementBtn = cartItem.querySelector('.decrement');
+      const incrementBtn = cartItem.querySelector('.increment');
+      const qtyInput = cartItem.querySelector('.quantity-input');
+      const removeBtn = cartItem.querySelector('.remove-item');
+
+      decrementBtn.addEventListener('click', () => {
+        if (qtyInput.value > 1) {
+          qtyInput.value = parseInt(qtyInput.value) - 1;
+          updateCart();
+        }
+      });
+
+      incrementBtn.addEventListener('click', () => {
+        qtyInput.value = parseInt(qtyInput.value) + 1;
+        updateCart();
+      });
+
+      qtyInput.addEventListener('change', () => {
+        if (qtyInput.value < 1 || isNaN(qtyInput.value)) {
+          qtyInput.value = 1;
+        }
+        updateCart();
+      });
+
+      removeBtn.addEventListener('click', () => {
+        cartItem.remove();
+        updateCart();
+      });
+    }
+  }
+
+  // Update cart count, subtotal, empty message, and checkout button
+  function updateCart() {
+    const cartItems = cartItemsContainer.querySelectorAll('.cart-item');
+    let totalItems = 0;
+    let subtotal = 0;
+
+    cartItems.forEach(item => {
+      const qty = parseInt(item.querySelector('.quantity-input').value);
+      const priceText = item.querySelector('.cart-item-price').innerText;
+      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+
+      totalItems += qty;
+      subtotal += price * qty;
+    });
+
+    cartCount.innerText = totalItems;
+    subtotalItemsText.innerText = `Subtotal (${totalItems} item${totalItems !== 1 ? 's' : ''}):`;
+    subtotalAmountText.innerText = `$${subtotal.toFixed(2)}`;
+
+    if (totalItems === 0) {
+      emptyCartMessage.style.display = 'block';
+      checkoutBtn.disabled = true;
+      checkoutBtn.style.opacity = '0.5';
+    } else {
+      emptyCartMessage.style.display = 'none';
+      checkoutBtn.disabled = false;
+      checkoutBtn.style.opacity = '1';
+    }
+  }
+
+  function openCart() {
+    cartSidebar.classList.add('active');
+    overlay.classList.add('active');
+  }
+</script>
 <body>
     <!-- Header/Navbar -->
     <div class="navbar">
