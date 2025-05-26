@@ -917,7 +917,88 @@
     overlay.classList.add('active');
   }
 </script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script>
+  // Function to sign up new users
+  function signUp() {
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        alert('User signed up: ' + userCredential.user.email);
+        updateUserStatus();
+      })
+      .catch(error => {
+        alert('Error: ' + error.message);
+      });
+  }
+
+  // Function to log in existing users
+  function login() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        alert('Logged in: ' + userCredential.user.email);
+        updateUserStatus();
+      })
+      .catch(error => {
+        alert('Error: ' + error.message);
+      });
+  }
+
+  // Function to log out
+  function logout() {
+    firebase.auth().signOut().then(() => {
+      alert('Logged out');
+      updateUserStatus();
+    });
+  }
+
+  // Function to update user login status on page
+  function updateUserStatus() {
+    const user = firebase.auth().currentUser;
+    const statusDiv = document.getElementById('user-status');
+    if (user) {
+      statusDiv.textContent = 'Logged in as: ' + user.email;
+    } else {
+      statusDiv.textContent = 'Not logged in';
+    }
+  }
+
+  // Listen for auth state changes and update UI automatically
+  firebase.auth().onAuthStateChanged(user => {
+    updateUserStatus();
+  });
+</script>
 <body>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAeQ_L-ihP_otj1OTbRwm0J7cm3sAXAcMs",
+    authDomain: "mini-45afc.firebaseapp.com",
+    projectId: "mini-45afc",
+    storageBucket: "mini-45afc.firebasestorage.app",
+    messagingSenderId: "707578478658",
+    appId: "1:707578478658:web:891b3dff3361f4404caddb",
+    measurementId: "G-YY4YY2QYKJ"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
     <!-- Header/Navbar -->
     <div class="navbar">
         <div class="hamburger-menu">
@@ -1250,3 +1331,18 @@
         <div class="footer-links">
             <div class="footer-column">
                 <h3>Get to Know Us
+                    <div class="auth-container">
+  <h2>Sign Up</h2>
+  <input id="signup-email" type="email" placeholder="Email" />
+  <input id="signup-password" type="password" placeholder="Password" />
+  <button onclick="signUp()">Sign Up</button>
+
+  <h2>Login</h2>
+  <input id="login-email" type="email" placeholder="Email" />
+  <input id="login-password" type="password" placeholder="Password" />
+  <button onclick="login()">Login</button>
+
+  <button onclick="logout()">Logout</button>
+
+  <div id="user-status"></div>
+</div>
