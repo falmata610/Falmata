@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZonMax - Online Shopping</title>
+    <title>Amazon Clone - Online Shopping</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset and Base Styles */
@@ -20,6 +20,7 @@
             --deals-color: #c60;
             --nav-hover: #485769;
             --success-color: #067d62;
+            --search-border: #cd9042;
         }
         
         * {
@@ -114,6 +115,10 @@
             font-size: 12px;
             cursor: pointer;
             border-right: 1px solid #ddd;
+            background-color: #e6e6e6;
+            border-top: 1px solid #cdcdcd;
+            border-bottom: 1px solid #cdcdcd;
+            border-left: 1px solid #cdcdcd;
         }
         
         .search-input {
@@ -121,6 +126,8 @@
             padding: 0 10px;
             border: none;
             font-size: 14px;
+            border-top: 1px solid #cdcdcd;
+            border-bottom: 1px solid #cdcdcd;
         }
         
         .search-button {
@@ -133,6 +140,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
+            border: 1px solid var(--search-border);
         }
         
         .search-button:hover {
@@ -286,16 +294,74 @@
             display: block;
         }
         
-        /* Hero Section */
-        .hero {
-            height: 200px;
-            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg');
+        /* Hero Carousel */
+        .hero-carousel {
+            height: 300px;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
             display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        
+        .carousel-control {
+            background-color: rgba(0,0,0,0.2);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-control:hover {
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-indicator.active {
+            background-color: white;
         }
         
         /* Today's Deals Section */
@@ -375,7 +441,7 @@
         
         .deal-card img {
             width: 100%;
-            height: 100px;
+            height: 120px;
             object-fit: contain;
             margin-bottom: 10px;
         }
@@ -482,6 +548,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             cursor: pointer;
+            padding-right: 10px;
         }
         
         .product-title:hover {
@@ -567,6 +634,230 @@
         .buy-now:hover {
             background-color: #fa8c00;
             border-color: #e27b00;
+        }
+        
+        /* Product Detail Modal */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .product-modal.active {
+            display: block;
+        }
+        
+        .modal-content {
+            background-color: white;
+            max-width: 1000px;
+            margin: 20px auto;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        .product-detail-top {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .product-images {
+            width: 40%;
+            padding-right: 20px;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+        
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        
+        .thumbnail:hover {
+            border-color: var(--accent-color);
+        }
+        
+        .product-info {
+            width: 60%;
+            padding-left: 20px;
+        }
+        
+        .product-title-large {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .product-brand {
+            color: var(--prime-color);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .product-rating-large {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .rating-stars {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+        
+        .rating-count {
+            color: var(--prime-color);
+            cursor: pointer;
+        }
+        
+        .price-large {
+            font-size: 24px;
+            color: var(--price-color);
+            margin-bottom: 10px;
+        }
+        
+        .original-price-large {
+            text-decoration: line-through;
+            color: #565959;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .discount-badge {
+            background-color: var(--price-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        
+        .prime-badge {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .prime-badge img {
+            width: 50px;
+            margin-right: 10px;
+        }
+        
+        .product-description {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .product-options {
+            margin-bottom: 20px;
+        }
+        
+        .option-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .option-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .option-button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .option-button:hover {
+            border-color: var(--accent-color);
+            background-color: #f7f7f7;
+        }
+        
+        .option-button.selected {
+            border-color: var(--accent-color);
+            background-color: #fff8e6;
+        }
+        
+        .add-to-cart-large {
+            background-color: #ffd814;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            border: 1px solid #fcd200;
+        }
+        
+        .buy-now-large {
+            background-color: #ffa41c;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            border: 1px solid #ff8f00;
+        }
+        
+        .product-detail-bottom {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
         
         /* Sidebar Cart */
@@ -831,7 +1122,7 @@
                 display: block;
             }
             
-            .hero {
+            .hero-carousel {
                 height: 300px;
             }
             
@@ -846,6 +1137,22 @@
             .deals-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
+            
+            .modal-body {
+                flex-direction: row;
+            }
+            
+            .product-detail-top {
+                flex-direction: row;
+            }
+            
+            .product-images {
+                width: 40%;
+            }
+            
+            .product-info {
+                width: 60%;
+            }
         }
         
         @media (max-width: 600px) {
@@ -859,6 +1166,19 @@
             
             .product-grid, .deals-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .product-detail-top {
+                flex-direction: column;
+            }
+            
+            .product-images, .product-info {
+                width: 100%;
+                padding: 0;
             }
         }
         
@@ -887,7 +1207,7 @@
         </div>
         <div class="logo" id="homeLink">
             <i class="fab fa-amazon"></i>
-            <span>ZonMax</span>
+            <span>Amazon</span>
         </div>
         <div class="delivery-info" id="deliveryInfo">
             <div class="location-icon">
@@ -906,7 +1226,7 @@
                 <option>Books</option>
                 <option>Toys</option>
             </select>
-            <input type="text" class="search-input" id="searchInput" placeholder="Search ZonMax">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search Amazon">
             <button class="search-button" id="searchButton">
                 <i class="fas fa-search"></i>
             </button>
@@ -947,8 +1267,25 @@
         </ul>
     </div>
     
-    <!-- Hero Section -->
-    <div class="hero"></div>
+    <!-- Hero Carousel -->
+    <div class="hero-carousel">
+        <div class="carousel-slide" style="background-image: url('https://m.media-amazon.com/images/I/61DUO0NqyyL._SX3000_.jpg');"></div>
+        <div class="carousel-slide" style="background-image: url('https://m.media-amazon.com/images/I/61jovjd+f9L._SX3000_.jpg');"></div>
+        <div class="carousel-slide" style="background-image: url('https://m.media-amazon.com/images/I/61TD5JLGhIL._SX3000_.jpg');"></div>
+        <div class="carousel-slide" style="background-image: url('https://m.media-amazon.com/images/I/71qid7QFWJL._SX3000_.jpg');"></div>
+        
+        <div class="carousel-controls">
+            <button class="carousel-control" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-control" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="carousel-indicators">
+            <div class="carousel-indicator" data-index="0"></div>
+            <div class="carousel-indicator" data-index="1"></div>
+            <div class="carousel-indicator" data-index="2"></div>
+            <div class="carousel-indicator" data-index="3"></div>
+        </div>
+    </div>
     
     <!-- Today's Deals Section -->
     <div class="todays-deals">
@@ -960,795 +1297,4 @@
         <div class="deals-grid">
             <div class="deal-card" data-id="deal1">
                 <div class="deal-badge">30% off</div>
-                <img src="https://m.media-amazon.com/images/I/41X7KGp3QFL._AC_UL320_.jpg" alt="Smart Watch">
-                <div class="deal-price">$89.99 <span class="original">$129.99</span></div>
-                <div class="deal-claimed">Limited-time deal</div>
-            </div>
-            <div class="deal-card" data-id="deal2">
-                <div class="deal-badge">50% off</div>
-                <img src="https://m.media-amazon.com/images/I/61nzj4gIoVL._AC_UL320_.jpg" alt="Headphones">
-                <div class="deal-price">$49.99 <span class="original">$99.99</span></div>
-                <div class="deal-claimed">20+ claimed</div>
-            </div>
-            <div class="deal-card" data-id="deal3">
-                <div class="deal-badge">25% off</div>
-                <img src="https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg" alt="Smart Bulb">
-                <div class="deal-price">$14.99 <span class="original">$19.99</span></div>
-                <div class="deal-claimed">Limited-time deal</div>
-            </div>
-            <div class="deal-card" data-id="deal4">
-                <div class="deal-badge">40% off</div>
-                <img src="https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg" alt="Coffee Maker">
-                <div class="deal-price">$59.99 <span class="original">$99.99</span></div>
-                <div class="deal-claimed">30+ claimed</div>
-            </div>
-            <div class="deal-card" data-id="deal5">
-                <div class="deal-badge">20% off</div>
-                <img src="https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg" alt="Robot Vacuum">
-                <div class="deal-price">$199.99 <span class="original">$249.99</span></div>
-                <div class="deal-claimed">Limited-time deal</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Product Sections -->
-    <div class="product-section">
-        <div class="section-title">
-            <h2>Recommended for You</h2>
-            <span class="see-all" id="seeAllRecommended">See all</span>
-        </div>
-        <div class="product-grid">
-            <div class="product-card" data-id="prod1">
-                <div class="product-badge">30% off</div>
-                <img src="https://m.media-amazon.com/images/I/71KBQ+0gQmL._AC_UL320_.jpg" alt="Wireless Earbuds">
-                <h3 class="product-title">Premium Wireless Earbuds with Noise Cancellation</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span class="product-rating-count">(1,234)</span>
-                </div>
-                <div class="product-price">
-                    $89.99 <span class="original">$129.99</span>
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod2">
-                <div class="product-badge">Best Seller</div>
-                <img src="https://m.media-amazon.com/images/I/71h6PpGaz9L._AC_UL320_.jpg" alt="Smart Watch">
-                <h3 class="product-title">Fitness Smart Watch with Heart Rate Monitor</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <span class="product-rating-count">(2,567)</span>
-                </div>
-                <div class="product-price">
-                    $129.99
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod3">
-                <div class="product-badge">Limited Deal</div>
-                <img src="https://m.media-amazon.com/images/I/61vqJ6OoPML._AC_UL320_.jpg" alt="Bluetooth Speaker">
-                <h3 class="product-title">Portable Bluetooth Speaker - Waterproof</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <span class="product-rating-count">(3,891)</span>
-                </div>
-                <div class="product-price">
-                    $45.99 <span class="original">$59.99</span>
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod4">
-                <img src="https://m.media-amazon.com/images/I/81r5H+QNwYL._AC_UL320_.jpg" alt="Laptop Backpack">
-                <h3 class="product-title">Anti-Theft Laptop Backpack with USB Port</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <span class="product-rating-count">(4,321)</span>
-                </div>
-                <div class="product-price">
-                    $34.99
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-        </div>
-    </div>
-    
-    <div class="product-section">
-        <div class="section-title">
-            <h2>Frequently repurchased in Home</h2>
-            <span class="see-all" id="seeAllHome">See all</span>
-        </div>
-        <div class="product-grid">
-            <div class="product-card" data-id="prod5">
-                <img src="https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg" alt="Smart Bulb">
-                <h3 class="product-title">Smart Light Bulb, Works with Alexa & Google Home</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <span class="product-rating-count">(1,876)</span>
-                </div>
-                <div class="product-price">
-                    $19.99 <span class="original">$24.99</span>
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod6">
-                <div class="product-badge">New</div>
-                <img src="https://m.media-amazon.com/images/I/61L1ItFgFHL._AC_UL320_.jpg" alt="Air Fryer">
-                <h3 class="product-title">Digital Air Fryer with 8 Cooking Presets</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                    <span class="product-rating-count">(3,245)</span>
-                </div>
-                <div class="product-price">
-                    $79.99
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod7">
-                <img src="https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg" alt="Coffee Maker">
-                <h3 class="product-title">Programmable Coffee Maker with Timer</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <span class="product-rating-count">(2,109)</span>
-                </div>
-                <div class="product-price">
-                    $49.99
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-            
-            <div class="product-card" data-id="prod8">
-                <div class="product-badge">Top Rated</div>
-                <img src="https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg" alt="Robot Vacuum">
-                <h3 class="product-title">Robot Vacuum Cleaner with Smart Mapping</h3>
-                <div class="product-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <span class="product-rating-count">(5,432)</span>
-                </div>
-                <div class="product-price">
-                    $249.99 <span class="original">$299.99</span>
-                </div>
-                <div class="product-prime">
-                    <i class="fas fa-check"></i> FREE delivery for Prime members
-                </div>
-                <button class="add-to-cart">Add to Cart</button>
-                <button class="buy-now">Buy Now</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Sidebar Cart -->
-    <div class="cart-sidebar">
-        <div class="cart-header">
-            <h3>Shopping Cart</h3>
-            <button class="close-cart">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="cart-items">
-            <!-- Cart items will be added here dynamically -->
-            <div class="empty-cart-message">Your cart is empty</div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-subtotal">
-                <span>Subtotal (0 items):</span>
-                <span>$0.00</span>
-            </div>
-            <div class="cart-message">
-                <i class="fas fa-check-circle"></i> Your order qualifies for FREE Delivery
-            </div>
-            <button class="checkout-btn">Proceed to Checkout</button>
-        </div>
-    </div>
-    
-    <div class="overlay"></div>
-    
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i>
-        <span>Added to Cart</span>
-    </div>
-    
-    <!-- Footer -->
-    <div class="footer-back" id="backToTop">
-        Back to top
-    </div>
-    <div class="footer">
-        <div class="footer-links">
-            <div class="footer-column">
-                <h3>Get to Know Us</h3>
-                <ul>
-                    <li id="aboutUsLink">About Us</li>
-                    <li id="careersLink">Careers</li>
-                    <li id="pressLink">Press Releases</li>
-                    <li id="scienceLink">ZonMax Science</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Make Money with Us</h3>
-                <ul>
-                    <li id="sellProductsLink">Sell products</li>
-                    <li id="sellAppsLink">Sell apps</li>
-                    <li id="affiliateLink">Become an Affiliate</li>
-                    <li id="advertiseLink">Advertise Your Products</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Payment Products</h3>
-                <ul>
-                    <li id="businessCardLink">ZonMax Business Card</li>
-                    <li id="shopPointsLink">Shop with Points</li>
-                    <li id="reloadBalanceLink">Reload Your Balance</li>
-                    <li id="currencyLink">Currency Converter</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Let Us Help You</h3>
-                <ul>
-                    <li id="yourAccountLink">Your Account</li>
-                    <li id="yourOrdersLink">Your Orders</li>
-                    <li id="shippingLink">Shipping Rates</li>
-                    <li id="helpLink">Help</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2023 ZonMax.com, Inc. or its affiliates</p>
-        </div>
-    </div>
-    
-    <script>
-        // Product data
-        const products = {
-            prod1: {
-                id: "prod1",
-                title: "Premium Wireless Earbuds with Noise Cancellation",
-                price: 89.99,
-                originalPrice: 129.99,
-                image: "https://m.media-amazon.com/images/I/71KBQ+0gQmL._AC_UL320_.jpg",
-                rating: 4.5,
-                ratingCount: 1234
-            },
-            prod2: {
-                id: "prod2",
-                title: "Fitness Smart Watch with Heart Rate Monitor",
-                price: 129.99,
-                originalPrice: 129.99,
-                image: "https://m.media-amazon.com/images/I/71h6PpGaz9L._AC_UL320_.jpg",
-                rating: 5,
-                ratingCount: 2567
-            },
-            prod3: {
-                id: "prod3",
-                title: "Portable Bluetooth Speaker - Waterproof",
-                price: 45.99,
-                originalPrice: 59.99,
-                image: "https://m.media-amazon.com/images/I/61vqJ6OoPML._AC_UL320_.jpg",
-                rating: 4,
-                ratingCount: 3891
-            },
-            prod4: {
-                id: "prod4",
-                title: "Anti-Theft Laptop Backpack with USB Port",
-                price: 34.99,
-                originalPrice: 34.99,
-                image: "https://m.media-amazon.com/images/I/81r5H+QNwYL._AC_UL320_.jpg",
-                rating: 5,
-                ratingCount: 4321
-            },
-            prod5: {
-                id: "prod5",
-                title: "Smart Light Bulb, Works with Alexa & Google Home",
-                price: 19.99,
-                originalPrice: 24.99,
-                image: "https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg",
-                rating: 4,
-                ratingCount: 1876
-            },
-            prod6: {
-                id: "prod6",
-                title: "Digital Air Fryer with 8 Cooking Presets",
-                price: 79.99,
-                originalPrice: 79.99,
-                image: "https://m.media-amazon.com/images/I/61L1ItFgFHL._AC_UL320_.jpg",
-                rating: 4.5,
-                ratingCount: 3245
-            },
-            prod7: {
-                id: "prod7",
-                title: "Programmable Coffee Maker with Timer",
-                price: 49.99,
-                originalPrice: 49.99,
-                image: "https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg",
-                rating: 4,
-                ratingCount: 2109
-            },
-            prod8: {
-                id: "prod8",
-                title: "Robot Vacuum Cleaner with Smart Mapping",
-                price: 249.99,
-                originalPrice: 299.99,
-                image: "https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg",
-                rating: 5,
-                ratingCount: 5432
-            },
-            deal1: {
-                id: "deal1",
-                title: "Smart Watch with Fitness Tracking",
-                price: 89.99,
-                originalPrice: 129.99,
-                image: "https://m.media-amazon.com/images/I/41X7KGp3QFL._AC_UL320_.jpg",
-                rating: 4,
-                ratingCount: 876
-            },
-            deal2: {
-                id: "deal2",
-                title: "Wireless Headphones with Mic",
-                price: 49.99,
-                originalPrice: 99.99,
-                image: "https://m.media-amazon.com/images/I/61nzj4gIoVL._AC_UL320_.jpg",
-                rating: 4.5,
-                ratingCount: 1543
-            },
-            deal3: {
-                id: "deal3",
-                title: "Smart LED Light Bulb",
-                price: 14.99,
-                originalPrice: 19.99,
-                image: "https://m.media-amazon.com/images/I/71Swqqe7XAL._AC_UL320_.jpg",
-                rating: 4,
-                ratingCount: 765
-            },
-            deal4: {
-                id: "deal4",
-                title: "Programmable Coffee Maker",
-                price: 59.99,
-                originalPrice: 99.99,
-                image: "https://m.media-amazon.com/images/I/71OZY035QKL._AC_UL320_.jpg",
-                rating: 4.5,
-                ratingCount: 2310
-            },
-            deal5: {
-                id: "deal5",
-                title: "Robot Vacuum Cleaner",
-                price: 199.99,
-                originalPrice: 249.99,
-                image: "https://m.media-amazon.com/images/I/71pC69I3lzL._AC_UL320_.jpg",
-                rating: 5,
-                ratingCount: 4321
-            }
-        };
-
-        // Cart functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const cart = {
-                items: [],
-                total: 0,
-                
-                init: function() {
-                    this.loadCart();
-                    this.renderCart();
-                    this.setupEventListeners();
-                    this.startCountdown();
-                },
-                
-                loadCart: function() {
-                    const savedCart = localStorage.getItem('zonmaxCart');
-                    if (savedCart) {
-                        const cartData = JSON.parse(savedCart);
-                        this.items = cartData.items || [];
-                        this.total = cartData.total || 0;
-                    }
-                },
-                
-                saveCart: function() {
-                    localStorage.setItem('zonmaxCart', JSON.stringify({
-                        items: this.items,
-                        total: this.total
-                    }));
-                },
-                
-                addItem: function(product, quantity = 1) {
-                    const existingItem = this.items.find(item => item.id === product.id);
-                    
-                    if (existingItem) {
-                        existingItem.quantity += quantity;
-                    } else {
-                        this.items.push({
-                            id: product.id,
-                            title: product.title,
-                            price: product.price,
-                            image: product.image,
-                            quantity: quantity
-                        });
-                    }
-                    
-                    this.total += product.price * quantity;
-                    this.saveCart();
-                    this.renderCart();
-                    this.updateCartCount();
-                    
-                    // Show added notification
-                    this.showNotification(`${product.title} was added to your cart`);
-                },
-                
-                removeItem: function(itemId) {
-                    const itemIndex = this.items.findIndex(item => item.id === itemId);
-                    if (itemIndex !== -1) {
-                        const item = this.items[itemIndex];
-                        this.total -= item.price * item.quantity;
-                        this.items.splice(itemIndex, 1);
-                        this.saveCart();
-                        this.renderCart();
-                        this.updateCartCount();
-                    }
-                },
-                
-                updateQuantity: function(itemId, newQuantity) {
-                    const item = this.items.find(item => item.id === itemId);
-                    if (item && newQuantity > 0) {
-                        this.total -= item.price * item.quantity;
-                        item.quantity = newQuantity;
-                        this.total += item.price * item.quantity;
-                        this.saveCart();
-                        this.renderCart();
-                        this.updateCartCount();
-                    }
-                },
-                
-                clearCart: function() {
-                    this.items = [];
-                    this.total = 0;
-                    this.saveCart();
-                    this.renderCart();
-                    this.updateCartCount();
-                },
-                
-                renderCart: function() {
-                    const cartItemsEl = document.querySelector('.cart-items');
-                    const subtotalEl = document.querySelector('.cart-subtotal span:last-child');
-                    const itemCount = this.items.reduce((total, item) => total + item.quantity, 0);
-                    
-                    if (this.items.length === 0) {
-                        cartItemsEl.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>';
-                        subtotalEl.textContent = '$0.00';
-                        document.querySelector('.cart-subtotal span:first-child').textContent = `Subtotal (0 items):`;
-                        document.querySelector('.cart-message').style.display = 'none';
-                        return;
-                    }
-                    
-                    cartItemsEl.innerHTML = '';
-                    
-                    this.items.forEach(item => {
-                        const itemEl = document.createElement('div');
-                        itemEl.className = 'cart-item';
-                        itemEl.innerHTML = `
-                            <img src="${item.image}" alt="${item.title}" class="cart-item-img">
-                            <div class="cart-item-details">
-                                <h4 class="cart-item-title">${item.title}</h4>
-                                <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                                <div class="cart-item-quantity">
-                                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                                    <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
-                                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                                </div>
-                                <div class="remove-item" data-id="${item.id}">Delete</div>
-                            </div>
-                        `;
-                        cartItemsEl.appendChild(itemEl);
-                    });
-                    
-                    subtotalEl.textContent = `$${this.total.toFixed(2)}`;
-                    document.querySelector('.cart-subtotal span:first-child').textContent = `Subtotal (${itemCount} ${itemCount === 1 ? 'item' : 'items'}):`;
-                    document.querySelector('.cart-message').style.display = 'block';
-                    
-                    // Add event listeners to quantity controls
-                    document.querySelectorAll('.quantity-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const itemId = e.target.getAttribute('data-id');
-                            const input = document.querySelector(`.quantity-input[data-id="${itemId}"]`);
-                            let quantity = parseInt(input.value);
-                            
-                            if (e.target.classList.contains('minus')) {
-                                quantity = Math.max(1, quantity - 1);
-                            } else if (e.target.classList.contains('plus')) {
-                                quantity += 1;
-                            }
-                            
-                            input.value = quantity;
-                            this.updateQuantity(itemId, quantity);
-                        });
-                    });
-                    
-                    // Add event listeners to quantity inputs
-                    document.querySelectorAll('.quantity-input').forEach(input => {
-                        input.addEventListener('change', (e) => {
-                            const itemId = e.target.getAttribute('data-id');
-                            const quantity = parseInt(e.target.value) || 1;
-                            this.updateQuantity(itemId, quantity);
-                        });
-                    });
-                    
-                    // Add event listeners to remove buttons
-                    document.querySelectorAll('.remove-item').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const itemId = e.target.getAttribute('data-id');
-                            this.removeItem(itemId);
-                        });
-                    });
-                },
-                
-                updateCartCount: function() {
-                    const count = this.items.reduce((total, item) => total + item.quantity, 0);
-                    document.querySelector('.cart-count').textContent = count;
-                },
-                
-                showNotification: function(message) {
-                    const notification = document.getElementById('notification');
-                    notification.querySelector('span').textContent = message;
-                    notification.style.display = 'flex';
-                    
-                    setTimeout(() => {
-                        notification.style.display = 'none';
-                    }, 3000);
-                },
-                
-                startCountdown: function() {
-                    let hours = 12;
-                    let minutes = 34;
-                    let seconds = 56;
-                    
-                    const countdownEl = document.getElementById('dealCountdown');
-                    
-                    const timer = setInterval(() => {
-                        seconds--;
-                        
-                        if (seconds < 0) {
-                            seconds = 59;
-                            minutes--;
-                        }
-                        
-                        if (minutes < 0) {
-                            minutes = 59;
-                            hours--;
-                        }
-                        
-                        if (hours < 0) {
-                            clearInterval(timer);
-                            countdownEl.textContent = "Deal expired";
-                            return;
-                        }
-                        
-                        countdownEl.textContent = `Ends in ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                    }, 1000);
-                },
-                
-                setupEventListeners: function() {
-                    // Add to cart buttons
-                    document.querySelectorAll('.add-to-cart').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const productCard = e.target.closest('.product-card, .deal-card');
-                            const productId = productCard.getAttribute('data-id');
-                            const product = products[productId];
-                            this.addItem(product);
-                        });
-                    });
-                    
-                    // Buy now buttons
-                    document.querySelectorAll('.buy-now').forEach(btn => {
-                        btn.addEventListener('click', (e) => {
-                            const productCard = e.target.closest('.product-card, .deal-card');
-                            const productId = productCard.getAttribute('data-id');
-                            const product = products[productId];
-                            this.clearCart();
-                            this.addItem(product);
-                            this.showNotification(`Proceeding to checkout with ${product.title}`);
-                            
-                            // In a real app, this would redirect to checkout
-                            setTimeout(() => {
-                                document.querySelector('.cart-sidebar').classList.add('active');
-                                document.querySelector('.overlay').classList.add('active');
-                            }, 500);
-                        });
-                    });
-                    
-                    // Product click
-                    document.querySelectorAll('.product-title, .product-card img, .deal-card').forEach(el => {
-                        el.addEventListener('click', (e) => {
-                            // In a real app, this would go to product page
-                            alert('This would navigate to product details page in a real app');
-                        });
-                    });
-                    
-                    // Cart toggle
-                    document.getElementById('cartButton').addEventListener('click', () => {
-                        document.querySelector('.cart-sidebar').classList.add('active');
-                        document.querySelector('.overlay').classList.add('active');
-                    });
-                    
-                    // Close cart
-                    document.querySelector('.close-cart').addEventListener('click', () => {
-                        document.querySelector('.cart-sidebar').classList.remove('active');
-                        document.querySelector('.overlay').classList.remove('active');
-                    });
-                    
-                    // Overlay click
-                    document.querySelector('.overlay').addEventListener('click', () => {
-                        document.querySelector('.cart-sidebar').classList.remove('active');
-                        document.querySelector('.overlay').classList.remove('active');
-                    });
-                    
-                    // Back to top
-                    document.getElementById('backToTop').addEventListener('click', () => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    });
-                    
-                    // Navigation links
-                    document.getElementById('homeLink').addEventListener('click', () => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    });
-                    
-                    document.getElementById('deliveryInfo').addEventListener('click', () => {
-                        alert('This would show delivery options in a real app');
-                    });
-                    
-                    document.getElementById('signInLink').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        alert('This would show sign in modal in a real app');
-                    });
-                    
-                    document.getElementById('newCustomerLink').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        alert('This would show registration form in a real app');
-                    });
-                    
-                    document.getElementById('yourListsLink').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        alert('This would show your lists in a real app');
-                    });
-                    
-                    document.getElementById('wishListLink').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        alert('This would show your wish list in a real app');
-                    });
-                    
-                    document.getElementById('returnsLink').addEventListener('click', () => {
-                        alert('This would show your returns and orders in a real app');
-                    });
-                    
-                    // Secondary nav
-                    document.getElementById('allMenu').addEventListener('click', () => {
-                        alert('This would show all categories in a real app');
-                    });
-                    
-                    document.getElementById('todaysDealsMenu').addEventListener('click', () => {
-                        window.scrollTo({ top: document.querySelector('.todays-deals').offsetTop - 100, behavior: 'smooth' });
-                    });
-                    
-                    document.getElementById('customerServiceMenu').addEventListener('click', () => {
-                        alert('This would show customer service options in a real app');
-                    });
-                    
-                    document.getElementById('registryMenu').addEventListener('click', () => {
-                        alert('This would show registry options in a real app');
-                    });
-                    
-                    document.getElementById('giftCardsMenu').addEventListener('click', () => {
-                        alert('This would show gift cards in a real app');
-                    });
-                    
-                    document.getElementById('sellMenu').addEventListener('click', () => {
-                        alert('This would show selling options in a real app');
-                    });
-                    
-                    // See all links
-                    document.getElementById('seeAllDeals').addEventListener('click', () => {
-                        alert('This would show all deals in a real app');
-                    });
-                    
-                    document.getElementById('seeAllRecommended').addEventListener('click', () => {
-                        alert('This would show all recommended products in a real app');
-                    });
-                    
-                    document.getElementById('seeAllHome').addEventListener('click', () => {
-                        alert('This would show all home products in a real app');
-                    });
-                    
-                    // Search functionality
-                    document.getElementById('searchButton').addEventListener('click', () => {
-                        const query = document.getElementById('searchInput').value;
-                        const category = document.getElementById('searchCategory').value;
-                        
-                        if (query.trim() === '') {
-                            alert('Please enter a search term');
-                            return;
-                        }
-                        
-                        alert(`Searching for "${query}" in ${category} category`);
-                        // In a real app, this would perform search and show results
-                    });
-                    
-                    // Footer links
-                    document.getElementById('aboutUsLink').addEventListener('click', () => {
-                        alert('This would show about us page in a real app');
-                    });
-                    
-                    document.getElementById('careersLink').addEventListener('click', () => {
-                        alert('This would show careers page in a real app');
-                    });
-                    
-                    // Initialize cart count
-                    this.updateCartCount();
-                }
-            };
-            
-            // Initialize the cart
-            cart.init();
-        });
-    </script>
-</body>
-</html>
+                <img src="https://m.media-amazon.com/images/I
