@@ -148,39 +148,6 @@
     </a>
   </div>
 </section>
-
-  </section>
-
-  <div class="back-to-top" id="backToTop">↑ Top</div>
-
- <section id="feedback">
-  <h2 class="section-title">Report a Problem / Suggest an Idea</h2>
-  <form action="https://formspree.io/f/xwpoddev" method="POST" style="max-width: 600px; margin: auto;">
-    <label>Your Email (optional)</label><br>
-    <input type="email" name="email" style="width:100%; padding:0.5rem; border-radius:8px;"><br><br>
-    
-    <label>Message</label><br>
-    <textarea name="message" required style="width:100%; padding:0.75rem; height:120px; border-radius:8px;"></textarea><br><br>
-    
-    <button type="submit" style="padding: 0.75rem 2rem; background: #00ffcc; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Send</button>
-  </form>
-<section id="booking" style="padding: 4rem 2rem; text-align: center; background: #111; margin-top: 4rem;">
-  <h2 class="section-title" style="color: #ffcc00;">Book a Meeting</h2>
-  <p style="color: #ccc; margin-bottom: 1rem;">Easily schedule a 30-minute call with me using the calendar below.</p>
-  
-  <!-- Calendly inline widget begin -->
-  <div class="calendly-inline-widget" 
-       data-url="https://calendly.com/falmataa-ali23/30min?background_color=276998&text_color=ffffff&primary_color=e5e707" 
-       style="min-width:320px; height:700px;">
-  </div>
-  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-  <!-- Calendly inline widget end -->
-</section>
-</section>
- <footer>
-    © 2025 | Built for training and fun.
-  </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     const typing = document.getElementById("typing");
@@ -239,5 +206,127 @@
     });
   });
 </script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Appointment Booking</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    .section-title {
+      font-size: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Appointment Booking Section -->
+<section id="appointment-booking" style="padding: 4rem 2rem; background: #121212; color: #fff;">
+  <h2 class="section-title" style="text-align: center; color: #ffcc00;">Book an Appointment</h2>
+  <p style="text-align: center; color: #ccc; margin-bottom: 2rem;">Pick a time that works for you. Only 2 people allowed per time slot.</p>
+  <form id="booking-form" style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem;">
+    <input type="text" id="name" placeholder="Your Name" required style="padding: 0.8rem; border-radius: 8px; border: none;" />
+    <input type="email" id="email" placeholder="Your Email" required style="padding: 0.8rem; border-radius: 8px; border: none;" />
+    <input type="datetime-local" id="datetime" required style="padding: 0.8rem; border-radius: 8px; border: none;" />
+    <button type="submit" style="padding: 0.8rem; border: none; border-radius: 8px; background-color: #ffcc00; color: #000; font-weight: bold;">Book Now</button>
+    <p id="booking-status" style="text-align: center; margin-top: 1rem;"></p>
+  </form>
+</section>
+
+<!-- Load EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("7mc6oJQzKdpdA-C7-"); // Replace with your own public key
+</script>
+
+<!-- Firebase & Booking Logic -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js';
+  import { getFirestore, collection, addDoc, query, where, getDocs, Timestamp } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBO9BlxSqoyHUYl1BvqSqa7Ww_BZeZf9mo",
+    authDomain: "myappointmentapp-c1e28.firebaseapp.com",
+    projectId: "myappointmentapp-c1e28",
+    storageBucket: "myappointmentapp-c1e28.appspot.com",
+    messagingSenderId: "322938049495",
+    appId: "1:322938049495:web:efa086d7a3b7fbd6413192",
+    measurementId: "G-F1L2WK7N3T"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const form = document.getElementById('booking-form');
+  const status = document.getElementById('booking-status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const datetime = document.getElementById('datetime').value;
+
+    if (!name || !email || !datetime) {
+      status.textContent = 'Please fill in all fields.';
+      return;
+    }
+
+    try {
+      const bookingRef = collection(db, 'appointments');
+      const dateObj = new Date(datetime);
+      const timestamp = Timestamp.fromDate(dateObj);
+
+      // Limit to 2 people per time slot
+      const q = query(bookingRef, where("datetime", "==", timestamp));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.size >= 2) {
+        status.textContent = 'This time slot is full. Please choose another time.';
+        return;
+      }
+
+      // Save to Firestore
+      await addDoc(bookingRef, { name, email, datetime: timestamp });
+
+      // Format datetime for email
+      const formattedDate = new Date(datetime).toLocaleString('en-US', {
+        dateStyle: 'full',
+        timeStyle: 'short'
+      });
+
+      // Send confirmation email to user
+      emailjs.send("service_5xdba5c", "template_j2h41z7", {
+        name: name,
+        email: email,
+        datetime: formattedDate
+      }).then(() => {
+        console.log("Email sent to user");
+      }).catch((error) => {
+        console.error("Email sending failed:", error);
+      });
+
+      status.textContent = 'Appointment booked successfully! ✅';
+      form.reset();
+    } catch (error) {
+      console.error("Booking error:", error);
+      status.textContent = 'Error occurred. Please try again.';
+    }
+  });
+</script>
+
+</body>
+</html>
+
+ <footer>
+    © 2025 | Built for training and fun.
+  </footer>
+
 </body>
 </html>
