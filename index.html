@@ -1,21 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Cool AF Website</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🔥 My Fire Website 🔥</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>Welcome to My Website!</h1>
-    <p>This site is gonna be 🔥</p>
+  <nav>
+    <div class="logo">🔥 MySite</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Welcome to the 🔥 Zone</h1>
+    <p>This ain’t your grandma’s website. This is style, this is power, this is YOU.</p>
+    <a href="#features" class="btn">Explore</a>
   </header>
 
-  <main>
-    <button onclick="showAlert()">Click Me!</button>
-  </main>
+  <section id="features">
+    <div class="feature">
+      <h2>⚡ Fast</h2>
+      <p>Built to load in a blink and impress at first glance.</p>
+    </div>
+    <div class="feature">
+      <h2>🎨 Stylish</h2>
+      <p>Custom modern design that hits hard and looks clean.</p>
+    </div>
+    <div class="feature">
+      <h2>🔥 Responsive</h2>
+      <p>Looks sexy on phones, tablets, and desktops.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 FireWeb. All rights reserved.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
 </html>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>AOS.init();</script>
+<div class="feature" data-aos="fade-up">...</div>
