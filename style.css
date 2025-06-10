@@ -1,0 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #fff;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+nav {
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  content: '';
+  height: 2px;
+  background: #ff4081;
+  position: absolute;
+  width: 100%;
+  bottom: -4px;
+  left: 0;
+}
+
+.hero {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero .btn {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: white;
+  background: #ff4081;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.hero .btn:hover {
+  background: #e91e63;
+}
+
+#features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 50px 20px;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(0,0,0,0.6);
+  font-size: 0.9rem;
+}
