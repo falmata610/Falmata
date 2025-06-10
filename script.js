@@ -1,1 +1,3 @@
-console.log("Website loaded 🔥 Ready to GO!");
+console.log("🔥 Falmex Website Loaded");
+
+// Optional: Auto update active link on scroll (future enhancement)
