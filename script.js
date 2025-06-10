@@ -1,1 +1,1 @@
-console.log("Welcome to the 🔥 Zone. Ready to make it legendary.");
+console.log("Website loaded 🔥 Ready to GO!");
