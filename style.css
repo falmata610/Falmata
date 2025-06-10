@@ -134,3 +134,29 @@ footer {
   text-align: center;
   font-size: 0.9rem;
 }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 0;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(255, 64, 129, 0.2);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 30px rgba(255, 64, 129, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+}
