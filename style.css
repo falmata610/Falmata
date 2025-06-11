@@ -124,6 +124,20 @@ nav ul li a:hover::after {
   text-align: center;
 }
 
+.contact {
+  padding: 6rem 2rem;
+}
+
+.contact h2 {
+  margin-bottom: 1.5rem;
+}
+
+.contact p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: #ddd;
+}
+
 h2 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
