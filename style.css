@@ -1,194 +1,50 @@
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
 body {
-  font-family: 'Orbitron', sans-serif;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  color: #fff;
-  line-height: 1.6;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: rgba(20, 20, 20, 0.9);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(255, 0, 128, 0.2);
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ff0080;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.logo:hover {
-  transform: scale(1.1);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #fff;
-  transition: 0.3s;
-  position: relative;
-}
-
-nav ul li a::after {
-  content: '';
-  display: block;
-  height: 2px;
-  background: #ff0080;
-  width: 0;
-  transition: width 0.3s ease;
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-}
-
-nav ul li a:hover::after {
-  width: 100%;
-}
-
-.hero {
-  min-height: 100vh;
-  background: url('https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1') center/cover no-repeat;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  color: white;
+}
+
+.auth-container {
+  background-color: #ffffff11;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #00000055;
   text-align: center;
-  position: relative;
+  width: 300px;
+  backdrop-filter: blur(8px);
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  color: #ff66c4;
-  margin-bottom: 1rem;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: #ccc;
-  margin-bottom: 2rem;
-}
-
-.btn-glow {
-  background: #ff0080;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
   border: none;
   border-radius: 8px;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffffcc;
+  color: #000;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 15px #ff0080;
-  text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: 0.3s;
 }
 
-.btn-glow:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px #ff0080, 0 0 50px #ff0080;
+.auth-container button:hover {
+  background-color: #fff;
 }
 
-.section {
-  padding: 4rem 2rem;
-  text-align: center;
-}
-
-.contact {
-  padding: 6rem 2rem;
-}
-
-.contact h2 {
-  margin-bottom: 1.5rem;
-}
-
-.contact p {
-  margin-bottom: 2rem;
-  font-size: 1.1rem;
-  color: #ddd;
-}
-
-h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: #ff66c4;
-}
-
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1.5rem;
-  font-weight: bold;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 10px rgba(255, 0, 128, 0.1);
-  transition: all 0.3s ease;
-  color: #fff;
-}
-
-.glass-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 0 20px rgba(255, 0, 128, 0.3);
-}
-
-footer {
-  text-align: center;
-  padding: 2rem;
-  background: #111;
-  color: #666;
-  font-size: 0.9rem;
-  border-top: 1px solid #222;
-  margin-top: 4rem;
-}
-
-@media (max-width: 600px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .card-container {
-    grid-template-columns: 1fr;
-  }
+#message {
+  margin-top: 10px;
+  color: yellow;
 }

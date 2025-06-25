@@ -2,56 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Falmex</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Falmex Auth</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo" onclick="location.reload()">Falmex</div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="auth-container">
+    <h2>🔥 Falmex Login / Sign Up</h2>
 
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <h1>Welcome to the 🔥 Dark Zone</h1>
-      <p>Where creativity meets next-gen design.</p>
-      <a href="#about" class="btn-glow">Explore More</a>
-    </div>
-  </section>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
 
-  <section id="about" class="section about">
-    <h2>About This Fire</h2>
-    <p>This site is packed with real features, pro design, and crazy good UI. Not some weak theme.</p>
-    <div class="card-container">
-      <div class="glass-card">Responsive Design</div>
-      <div class="glass-card">Neon Hover Effects</div>
-      <div class="glass-card">Animated Sections</div>
-      <div class="glass-card">Custom Font & Icons</div>
-      <div class="glass-card">Glow Navigation</div>
-      <div class="glass-card">Logo Reload</div>
-      <div class="glass-card">Hero CTA Section</div>
-      <div class="glass-card">Modern Layout</div>
-      <div class="glass-card">Sticky Header</div>
-      <div class="glass-card">Dark Mode Aesthetic</div>
-    </div>
-  </section>
+    <button onclick="login()">Login</button>
+    <button onclick="signup()">Sign Up</button>
+    <p id="message"></p>
+  </div>
 
-  <section id="contact" class="section contact">
-    <h2>Contact</h2>
-    <p>Let’s build something epic. Tap the button to connect.</p>
-    <a href="mailto:contact@falmex.xyz" class="btn-glow">Send Email</a>
-  </section>
-
-  <footer>
-    <p>© 2025 Falmex. Designed with 💀 Dark Energy.</p>
-  </footer>
+  <script type="module" src="auth.js"></script>
 </body>
 </html>
